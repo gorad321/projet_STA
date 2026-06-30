@@ -1,8 +1,4 @@
--- =====================================================
--- Schéma de base de données — Site Web Vitrine UFR STA
--- Base : ufr_sta_db
--- Encodage : utf8mb4_unicode_ci
--- =====================================================
+-- Création Database pour Site Web Vitrine UFR STA
 
 CREATE DATABASE IF NOT EXISTS ufr_sta_db
   CHARACTER SET utf8mb4
@@ -10,9 +6,8 @@ CREATE DATABASE IF NOT EXISTS ufr_sta_db
 
 USE ufr_sta_db;
 
--- =====================================================
 -- 1. DEPARTEMENT
--- =====================================================
+
 CREATE TABLE departement (
     id_departement      INT AUTO_INCREMENT PRIMARY KEY,
     nom                 VARCHAR(150) NOT NULL,
@@ -22,9 +17,8 @@ CREATE TABLE departement (
     date_creation       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 2. FORMATION
--- =====================================================
+
 CREATE TABLE formation (
     id_formation        INT AUTO_INCREMENT PRIMARY KEY,
     departement_id      INT NOT NULL,
@@ -38,9 +32,8 @@ CREATE TABLE formation (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 3. MODULE_PROGRAMME (programme détaillé par semestre)
--- =====================================================
+
 CREATE TABLE module_programme (
     id_module           INT AUTO_INCREMENT PRIMARY KEY,
     formation_id         INT NOT NULL,
@@ -50,9 +43,8 @@ CREATE TABLE module_programme (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 4. ENSEIGNANT
--- =====================================================
+
 CREATE TABLE enseignant (
     id_enseignant        INT AUTO_INCREMENT PRIMARY KEY,
     departement_id       INT,
@@ -65,9 +57,8 @@ CREATE TABLE enseignant (
         ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 5. ACTUALITE
--- =====================================================
+
 CREATE TABLE actualite (
     id_actualite        INT AUTO_INCREMENT PRIMARY KEY,
     titre                VARCHAR(200) NOT NULL,
@@ -78,9 +69,8 @@ CREATE TABLE actualite (
     date_creation        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 6. ACTIVITE
--- =====================================================
+
 CREATE TABLE activite (
     id_activite          INT AUTO_INCREMENT PRIMARY KEY,
     titre                VARCHAR(200) NOT NULL,
@@ -91,9 +81,7 @@ CREATE TABLE activite (
     date_creation        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 7. ALBUM (galerie photo organisée par albums)
--- =====================================================
 CREATE TABLE album (
     id_album             INT AUTO_INCREMENT PRIMARY KEY,
     titre                VARCHAR(150) NOT NULL,
@@ -102,9 +90,8 @@ CREATE TABLE album (
     date_creation         TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- 8. PHOTO (liée soit à une activité, soit à un album)
--- =====================================================
+
 CREATE TABLE photo (
     id_photo             INT AUTO_INCREMENT PRIMARY KEY,
     activite_id          INT NULL,
@@ -122,9 +109,8 @@ CREATE TABLE photo (
     -- MariaDB (XAMPP).
 ) ENGINE=InnoDB;
 
--- =====================================================
--- 10. ADMIN (gestion des accès — mot de passe en Phase 4)
--- =====================================================
+-- 9. ADMIN (gestion des accès — mot de passe )
+
 CREATE TABLE admin (
     id_admin             INT AUTO_INCREMENT PRIMARY KEY,
     nom_utilisateur       VARCHAR(100) NOT NULL UNIQUE,
@@ -132,9 +118,8 @@ CREATE TABLE admin (
     date_creation          TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- =====================================================
 -- INDEX utiles
--- =====================================================
+
 CREATE INDEX idx_formation_departement ON formation(departement_id);
 CREATE INDEX idx_module_formation ON module_programme(formation_id);
 CREATE INDEX idx_enseignant_departement ON enseignant(departement_id);
