@@ -1,0 +1,35 @@
+
+:root {
+  /* Couleurs */
+  --color-primary:     #1A3A6B;   
+  --color-accent:      #B5622A;  
+  --color-highlight:   #C05A2E;   
+  --color-text:        #2D2D2D;  
+  --color-text-light:  #555555;
+  --color-bg:          #FFFFFF;
+  --color-bg-section:  #F4F4F2;  
+
+
+  /* Polices */
+  --font-title:  'Playfair Display', serif;
+  --font-body:   'Roboto', sans-serif;
+
+  /* Tailles */
+  --fs-h1: 32px;
+  --fs-h2: 24px;
+  --fs-h3: 20px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+
+  /* Espacements */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+
+  /* border */
+  --radius-btn:     4px;
+  --radius-card:    8px;
+  --radius-section: 12px;
+}
