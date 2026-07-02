@@ -6,18 +6,14 @@ import pymysql.cursors
 from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, request, url_for
 
-# ------------------------------------------------
 # Configuration
-# ------------------------------------------------
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'dev-secret-key')
 
 
-# ------------------------------------------------
 # Connexion base de données
-# ------------------------------------------------
 def get_db():
     """Ouvre une connexion MySQL et la retourne."""
     return pymysql.connect(
@@ -30,9 +26,7 @@ def get_db():
     )
 
 
-# ------------------------------------------------
 # Fonctions pymysql réutilisables
-# ------------------------------------------------
 def db_fetch_all(query, params=None):
     """Exécute une requête SELECT et retourne toutes les lignes."""
     conn = get_db()
@@ -67,17 +61,13 @@ def db_execute(query, params=None):
         conn.close()
 
 
-# ------------------------------------------------
 # Contexte global Jinja2 (disponible dans tous les templates)
-# ------------------------------------------------
 @app.context_processor
 def inject_globals():
     return {'now': datetime.now()}
 
 
-# ------------------------------------------------
 # Route de test de la connexion DB
-# ------------------------------------------------
 @app.route('/test-db')
 def test_db():
     try:
@@ -88,9 +78,7 @@ def test_db():
         return f'Erreur de connexion : {e}', 500
 
 
-# ------------------------------------------------
 # Routes publiques
-# ------------------------------------------------
 @app.route('/')
 def index():
     # Dernières actualités (5 max) pour l'accueil
@@ -267,8 +255,6 @@ def contact():
     return render_template('contact.html')
 
 
-# ------------------------------------------------
 # Lancement
-# ------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True)
