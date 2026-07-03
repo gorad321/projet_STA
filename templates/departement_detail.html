@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — {{ departement.nom }}{% endblock %}
+
+{% block meta_description %}{{ departement.description[:150] }}{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>{{ departement.nom }}</h1>
+  </div>
+</section>
+
+<!-- PRÉSENTATION -->
+<section class="section">
+  <div class="container">
+    <a href="{{ url_for('departements') }}" class="back-link">← Tous les départements</a>
+    <div class="departement-presentation">
+      <p>{{ departement.description }}</p>
+      {% if departement.responsable %}
+        <p><strong>Chef de département :</strong> {{ departement.responsable }}</p>
+      {% endif %}
+      {% if departement.contact %}
+        <p><strong>Contact :</strong> {{ departement.contact }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- FORMATIONS -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Formations proposées</h2>
+    <p class="section-subtitle">Les parcours du département {{ departement.nom }}</p>
+    {% if formations %}
+      <div class="grid-3">
+        {% for formation in formations %}
+          <div class="dept-card">
+            <span class="badge badge-primary">{{ formation.niveau }}</span>
+            <h3>{{ formation.nom }}</h3>
+            {% if formation.duree %}<p>Durée : {{ formation.duree }}</p>{% endif %}
+            <a href="{{ url_for('formation_detail', id_formation=formation.id_formation) }}"
+               class="btn btn-outline">Voir la formation</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucune formation enregistrée pour ce département.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ENSEIGNANTS -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Enseignants</h2>
+    <p class="section-subtitle">L'équipe pédagogique du département</p>
+    {% if enseignants %}
+      <div class="grid-3">
+        {% for enseignant in enseignants %}
+          <article class="card">
+            {% if enseignant.photo %}
+              <img src="{{ url_for('static', filename=enseignant.photo) }}"
+                   alt="{{ enseignant.nom }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
+            {% endif %}
+            <div class="card-body">
+              <h3 class="card-title">{{ enseignant.nom }}</h3>
+              {% if enseignant.grade %}<p class="card-text">{{ enseignant.grade }}</p>{% endif %}
+              {% if enseignant.email %}
+                <a href="mailto:{{ enseignant.email }}">{{ enseignant.email }}</a>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucun enseignant enregistré pour ce département.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

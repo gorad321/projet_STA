@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Départements{% endblock %}
+
+{% block meta_description %}Découvrez les départements de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>Nos départements</h1>
+    <p>Trois départements au service de votre réussite</p>
+  </div>
+</section>
+
+<!-- LISTE DES DÉPARTEMENTS -->
+<section class="section">
+  <div class="container">
+    {% if departements %}
+      <div class="grid-3">
+        {% for dept in departements %}
+          <div class="dept-card">
+            <h3>{{ dept.nom }}</h3>
+            <p>{{ dept.description }}</p>
+            {% if dept.responsable %}
+              <p><strong>Chef de département :</strong> {{ dept.responsable }}</p>
+            {% endif %}
+            <a href="{{ url_for('departement_detail', id_departement=dept.id_departement) }}"
+               class="btn btn-outline">Découvrir</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucun département pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

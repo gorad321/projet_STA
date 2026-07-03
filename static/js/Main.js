@@ -16,3 +16,20 @@ if (navToggle && navLinks) {
     });
   });
 }
+// Navbar transparente sur le hero (uniquement sur les pages qui ont un hero)
+const navbar = document.querySelector('.navbar');
+const hero = document.querySelector('.hero');
+
+if (navbar && hero) {
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      navbar.classList.remove('navbar-transparent');
+    } else {
+      navbar.classList.add('navbar-transparent');
+    }
+  };
+
+  // Vérifier au chargement de la page
+  handleScroll();
+  window.addEventListener('scroll', handleScroll);
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="{% block meta_description %}Site officiel de l'UFR Sciences, Technologies et Agronomie — Université Amadou Mahtar Mbow{% endblock %}" />
+  <meta name="description" content="{% block meta_description %}Site officiel de l'UFR Sciences et Technologies Avancées — Université Amadou Mahtar Mbow{% endblock %}" />
   <title>{% block title %}UFR STA — UAM{% endblock %}</title>
 
   <!-- CSS global -->
@@ -12,7 +12,7 @@
   <!-- CSS supplémentaire par page -->
   {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% if request.endpoint == 'index' %}page-home{% endif %}">
 
   <!-- ============================================
        NAVIGATION
@@ -22,11 +22,7 @@
 
       <!-- Logo + nom -->
       <a href="{{ url_for('index') }}" class="navbar-brand">
-        <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}" alt="Logo UFR STA" />
-        <div class="navbar-brand-text">
-          <span class="name">UFR STA</span>
-          <span class="sub">Université Amadou Mahtar Mbow</span>
-        </div>
+        <img class="logo-uam" src="{{ url_for('static', filename='images/logo-uam.png') }}" alt="Logo Université Amadou Mahtar Mbow" />
       </a>
 
       <!-- Bouton burger (mobile) -->
@@ -123,7 +119,7 @@
         <!-- Colonne 1 : À propos -->
         <div class="footer-col">
           <h4>UFR STA</h4>
-          <p>Sciences, Technologies et Agronomie</p>
+          <p>Sciences et Technologies Avancées</p>
           <p>Université Amadou Mahtar Mbow<br />Dakar, Sénégal</p>
         </div>
 

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Accueil{% endblock %}
+
+{% block meta_description %}Bienvenue sur le site officiel de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container hero-inner">
+    <h1>UFR Sciences et Technologies Avancées</h1>
+    <p>Former les ingénieurs, chercheurs et innovateurs qui construiront le Sénégal de demain.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('formations') }}" class="btn btn-primary">Nos formations</a>
+      <a href="{{ url_for('contact') }}" class="btn btn-white">Nous contacter</a>
+    </div>
+  </div>
+</section>
+<!-- CHIFFRES CLÉS -->
+<section class="section section-alt section-stats">
+  <div class="container">
+    <div class="grid-4 stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Départements</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">6</span>
+        <span class="stat-label">Formations</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">+500</span>
+        <span class="stat-label">Étudiants</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">+30</span>
+        <span class="stat-label">Enseignants</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOT DU DIRECTEUR -->
+<section class="section">
+  <div class="container">
+    <div class="directeur-bloc">
+      <div class="directeur-photo">
+        <img src="{{ url_for('static', filename='images/coulibaly.png') }}"
+             alt="Photo du Directeur de l'UFR STA" />
+      </div>
+      <div class="directeur-text">
+        <span class="section-eyebrow">Mot du Directeur</span>
+        <h2>Bienvenue à l'UFR STA</h2>
+        <p>L'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow s'engage à offrir une formation d'excellence ancrée dans les réalités africaines et ouverte sur le monde.</p>
+        <p>Notre ambition est de former des professionnels compétents, innovants et responsables, capables de relever les défis du développement durable au Sénégal et en Afrique.</p>
+        <p class="directeur-signature">Le Directeur de l'UFR STA</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DÉPARTEMENTS -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Nos départements</h2>
+    <p class="section-subtitle">Trois départements au service de votre réussite</p>
+    {% if departements %}
+      <div class="grid-3">
+        {% for dept in departements %}
+          <div class="dept-card">
+            <h3>{{ dept.nom }}</h3>
+            <p>{{ dept.description[:120] }}{% if dept.description|length > 120 %}...{% endif %}</p>
+            <a href="{{ url_for('departement_detail', id_departement=dept.id_departement) }}" class="btn btn-outline">Découvrir</a>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="section-cta">
+        <a href="{{ url_for('departements') }}" class="btn btn-primary">Tous nos départements</a>
+      </div>
+    {% else %}
+      <p class="empty-state">Aucun département pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

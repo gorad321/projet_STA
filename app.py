@@ -89,9 +89,14 @@ def index():
     activites = db_fetch_all(
         "SELECT * FROM activite ORDER BY date_activite DESC LIMIT 3"
     )
+    # Départements (3 max) pour l'accueil
+    departements = db_fetch_all(
+        "SELECT * FROM departement ORDER BY nom LIMIT 3"
+    )
     return render_template('index.html',
                            actualites=actualites,
-                           activites=activites)
+                           activites=activites,
+                           departements=departements)
 
 
 @app.route('/departements')
@@ -258,3 +263,4 @@ def contact():
 # Lancement
 if __name__ == '__main__':
     app.run(debug=True)
+
