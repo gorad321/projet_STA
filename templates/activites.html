@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Activités{% endblock %}
+
+{% block meta_description %}Toutes les activités de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>Activités</h1>
+    <p>La vie de l'UFR STA en événements</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if activites %}
+      <div class="grid-3">
+        {% for act in activites %}
+          <article class="card">
+            {% if act.photo %}
+              <img src="{{ url_for('static', filename=act.photo) }}"
+                   alt="{{ act.titre }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
+            {% endif %}
+            <div class="card-body">
+              <h3 class="card-title">{{ act.titre }}</h3>
+              <p class="card-text">{{ act.date_activite.strftime('%d/%m/%Y') }}{% if act.lieu %} — {{ act.lieu }}{% endif %}</p>
+              {% if act.organisateur %}<p class="card-text"><strong>Organisateur :</strong> {{ act.organisateur }}</p>{% endif %}
+              <p class="card-text">{{ act.description[:120] }}{% if act.description and act.description|length > 120 %}...{% endif %}</p>
+              <a href="{{ url_for('activite_detail', id_activite=act.id_activite) }}" class="btn btn-outline">En savoir plus</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucune activité pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

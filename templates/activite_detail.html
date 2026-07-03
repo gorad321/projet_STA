@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — {{ activite.titre }}{% endblock %}
+
+{% block meta_description %}{{ activite.description[:150] }}{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>{{ activite.titre }}</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <a href="{{ url_for('activites') }}" class="back-link">← Toutes les activités</a>
+    <div class="departement-presentation">
+      <p><strong>Date :</strong> {{ activite.date_activite.strftime('%d/%m/%Y') }}</p>
+      {% if activite.lieu %}<p><strong>Lieu :</strong> {{ activite.lieu }}</p>{% endif %}
+      {% if activite.organisateur %}<p><strong>Organisateur :</strong> {{ activite.organisateur }}</p>{% endif %}
+      <p>{{ activite.description }}</p>
+    </div>
+  </div>
+</section>
+
+
+{% if photos %}
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Photos</h2>
+    <div class="grid-3">
+      {% for photo in photos %}
+        <figure>
+          <img src="{{ url_for('static', filename=photo.chemin) }}"
+               alt="{{ photo.legende or activite.titre }}" class="card-img" />
+          {% if photo.legende %}<figcaption class="card-text">{{ photo.legende }}</figcaption>{% endif %}
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

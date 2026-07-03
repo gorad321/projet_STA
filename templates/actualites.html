@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Actualités{% endblock %}
+
+{% block meta_description %}Toutes les actualités de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>Actualités</h1>
+    <p>Toute l'actualité de l'UFR STA</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% if actualites %}
+      <div class="grid-3">
+        {% for actu in actualites %}
+          <article class="card">
+            {% if actu.photo %}
+              <img src="{{ url_for('static', filename=actu.photo) }}"
+                   alt="{{ actu.titre }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
+            {% endif %}
+            <div class="card-body">
+              {% if actu.type %}<span class="badge badge-primary">{{ actu.type }}</span>{% endif %}
+              <h3 class="card-title">{{ actu.titre }}</h3>
+              <p class="card-text">{{ actu.date_publication.strftime('%d/%m/%Y') }}</p>
+              <p class="card-text">{{ actu.description[:120] }}{% if actu.description and actu.description|length > 120 %}...{% endif %}</p>
+              <a href="{{ url_for('actualite_detail', id_actualite=actu.id_actualite) }}" class="btn btn-outline">Lire la suite</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucune actualité pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
