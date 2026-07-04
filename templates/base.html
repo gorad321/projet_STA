@@ -87,9 +87,7 @@
     </div>
   </nav>
 
-  <!-- ============================================
-       MESSAGES FLASH (notifications)
-  ============================================ -->
+  <!-- MESSAGES FLASH (notifications) -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       <div class="container" style="margin-top: 1rem;">
@@ -102,16 +100,12 @@
     {% endif %}
   {% endwith %}
 
-  <!-- ============================================
-       CONTENU PRINCIPAL
-  ============================================ -->
+  <!--CONTENU PRINCIPAL-->
   <main id="main-content" role="main">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- ============================================
-       FOOTER
-  ============================================ -->
+  <!--FOOTER-->
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-grid">
@@ -149,9 +143,7 @@
     </div>
   </footer>
 
-  <!-- ============================================
-       JAVASCRIPT
-  ============================================ -->
+  <!--JAVASCRIPT-->
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   {% block extra_js %}{% endblock %}
 

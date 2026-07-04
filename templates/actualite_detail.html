@@ -6,6 +6,7 @@
 
 {% block content %}
 
+<!-- HERO -->
 <section class="page-hero">
   <video class="hero-video" autoplay muted loop playsinline>
     <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
@@ -18,6 +19,7 @@
   </div>
 </section>
 
+<!-- DÉTAIL -->
 <section class="section">
   <div class="container">
     <a href="{{ url_for('actualites') }}" class="back-link">← Toutes les actualités</a>
