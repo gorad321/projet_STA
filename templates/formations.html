@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Formations{% endblock %}
+
+{% block meta_description %}Découvrez l'offre de formation de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow : Licence, Master, Doctorat.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>Nos formations</h1>
+    <p>Une offre de formation innovante en Sciences et Technologies Avancées</p>
+  </div>
+</section>
+
+<!-- PRÉSENTATION -->
+<section class="section">
+  <div class="container">
+    <div class="departement-presentation">
+      <p>L'UFR STA place le curseur sur des formations innovantes dans le domaine des STEMS, conformément aux recommandations de la Concertation Nationale sur l'Avenir de l'Enseignement Supérieur (CNAES). Elle développe un modèle pédagogique intégré qui aligne « Formation professionnelle » et « Formation par la Recherche ».</p>
+      <p>L'UFR Sciences et Technologies Avancées de l'UAM délivre des diplômes de Licence, de Master et de Doctorat. En fonction des besoins du marché de l'emploi et des demandes du milieu socio-professionnel (VAE), l'UFR STA proposera des formations certifiantes avec la délivrance d'un certificat.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DÉPARTEMENTS ET FILIÈRES -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Nos formations</h2>
+    <div class="departement-presentation">
+      <p><strong>MIM — Mathématiques, Informatique et Modélisation</strong></p>
+    </div>
+    <div class="grid-2" style="margin-bottom: var(--space-xl);">
+      <article class="card">
+        <img src="{{ url_for('static', filename='images/MPI.jpg') }}" alt="Filière Mathématiques, Physique et Informatique" class="card-img" />
+        <div class="card-body">
+          <h3 class="card-title">Mathématiques, Physique et Informatique (MPI)</h3>
+          <p class="card-text">Cette filière a pour objectif de permettre aux étudiants d'acquérir des connaissances fondamentales, de développer des compétences analytiques et de résolution de problèmes, et de préparer aux spécialisations et à la recherche scientifique.</p>
+          <a href="{{ url_for('formation_detail', id_formation=1) }}" class="btn btn-outline">Voir la formation</a>
+        </div>
+      </article>
+      <article class="card">
+        <img src="{{ url_for('static', filename='images/MIASS.jpg') }}" alt="Filière Mathématiques Informatique Appliquées aux Sciences Sociales" class="card-img" />
+        <div class="card-body">
+          <h3 class="card-title">Mathématiques Informatique Appliquées aux Sciences Sociales (MIASS)</h3>
+          <p class="card-text">Cette filière a pour objectif de former des spécialistes dans les métiers de la finance, de l'économie et de la gestion des organisations et de l'entreprise, en combinant les outils mathématiques et informatiques pour l'analyse des phénomènes économiques et sociaux.</p>
+          <a href="{{ url_for('formation_detail', id_formation=2) }}" class="btn btn-outline">Voir la formation</a>
+        </div>
+      </article>
+    </div>
+    <div class="departement-presentation">
+      <p><strong>SMU — Sciences de la Matière et de l'Univers</strong></p>
+    </div>
+    <div class="grid-2">
+      <article class="card">
+        <img src="{{ url_for('static', filename='images/SML.jpg') }}" alt="Filière Sciences de la Mer et du Littoral" class="card-img" />
+        <div class="card-body">
+          <h3 class="card-title">Sciences de la Mer et du Littoral (SML)</h3>
+          <p class="card-text">Cette filière prépare les étudiants aux métiers de la protection et de l'aménagement des côtes, de la gestion des ressources marines et des écosystèmes côtiers, et de l'économie bleue.</p>
+          <a href="{{ url_for('formation_detail', id_formation=3) }}" class="btn btn-outline">Voir la formation</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DÉBOUCHÉS -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Débouchés</h2>
+    <div class="departement-presentation" style="max-width: none;">
+      <p><strong>MIM — Mathématiques, Informatique et Modélisation</strong></p>
+      <p>– Enseignant ou Enseignant-chercheur.</p>
+      <p>– Développeurs, ingénieurs logiciels, architectes de données, analystes en sécurité informatique, administrateurs et intégrateurs d'applications, administrateurs en réseaux et systèmes, spécialistes en intelligence artificielle, en IoT, data scientists, etc.</p>
+      <p>– Les entreprises de divers secteurs, comme l'industrie pharmaceutique, l'énergie, l'aérospatiale, font appel à des experts en mathématiques et en physique pour des postes de recherche et développement, visant à améliorer les produits et les technologies existantes.</p>
+      <p>– Les mathématiques sont fondamentales dans les domaines de la finance, de l'assurance et de la gestion des risques. Cette filière offre donc des opportunités dans les métiers du secteur tertiaire, comme les banques et les assurances (actuariat, audit, analyste quantitatif, trader, gestionnaire de portefeuille, finance et ingénierie financière), le marketing, l'économie, la modélisation, la recherche, l'enseignement, l'entrepreneuriat, etc.</p>
+      <p>– Les compétences en physique et en informatique sont pertinentes pour de nombreux domaines de l'ingénierie, tels que l'ingénierie électronique, électrique, mécanique, matériaux, aérospatiale, etc.</p>
+      <p><strong>SMU — Sciences de la Matière et de l'Univers</strong></p>
+      <p>– Enseignant-Chercheur ou Chercheur dans le secteur public et/ou privé.</p>
+      <p>– Chercheur en biologie et écologie marine en laboratoires de recherche institutionnelle.</p>
+      <p>– Chargé de mission/ingénieur d'étude en environnement littoral et marin en laboratoires de recherche institutionnelle, bureaux d'études, collectivités territoriales, agences d'état et d'industries de la mer, services recherche d'entreprise et développement ou environnement d'entreprises privées, conservatoires et parcs marins, associations environnementales.</p>
+      <p>– Chargé de mission/ingénieur d'étude dans le domaine des ressources marines vivantes dans des organisations professionnelles, entreprises aquacoles, l'administration des pêches et de l'aquaculture.</p>
+      <p>– Ingénieur d'études en dimensionnement d'ouvrage (aménagement et protection du littoral, réhabilitation et modernisation des ouvrages portuaires…), en expertises marines, développement durable, génie marine et portuaire, etc.</p>
+      <p>– Technicien supérieur en Métrologie, production aquacole, aménagement et gestion des côtes.</p>
+      <p>– Cadre Planificateur et Gestion du littoral.</p>
+      <p>– Cadre écologue.</p>
+      <p>– Chargé de mission au sein de collectivités territoriales, Bureaux d'études, Associations environnementales, ONG, Aires Marines protégées, Parcs nationaux, Eaux et forêts, Ministère environnement et développement durable.</p>
+      <p>– Chargé de mission pêche.</p>
+      <p>– Responsable production aquacole.</p>
+      <p>– Responsable environnement.</p>
+      <p>– Création d'entreprise (bureau études) / startups.</p>
+      <p>– Etc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CRITÈRES D'ADMISSION -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Critères d'admission</h2>
+    <div class="departement-presentation">
+      <p><strong>MPI</strong> (Mathématiques, Physique et Informatique) : séries S1, S1A, S2, S2A, S3, S4.</p>
+      <p><strong>SML</strong> (Sciences de la Mer et du Littoral) : séries S1, S1A, S2, S2A, S3, S4.</p>
+      <p><strong>MIASS</strong> (Mathématiques et Informatique Appliquées aux Sciences Sociales) : séries S1, S1A, S2, S2A, S3, S4, STEG.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RECHERCHE ET INNOVATION -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">La Recherche et l'Innovation</h2>
+    <div class="departement-presentation" style="max-width: none;">
+      <p>L'UFR STA développe la recherche appliquée sur des questions scientifiques préoccupantes de l'heure liées au développement économique et social des communautés. Les activités de recherche sont organisées au sein d'un seul laboratoire suivant une approche pluridisciplinaire, dénommé <strong>Laboratoire CMED</strong> : Laboratoire Calcul scientifique, Modélisation, Environnement et Développement durable.</p>
+      <p><strong>Le Laboratoire CMED est structuré en trois équipes thématiques de recherche :</strong></p>
+      <p>– Équipe CMS : Calcul scientifique, Modélisation et Simulations numériques.</p>
+      <p>– Équipe 2EMC : Eau, Environnement Marin-Littoral et Changements climatiques.</p>
+      <p>– Équipe MIT : Matériaux et Innovation Technologiques.</p>
+      <p><strong>Les principales thématiques de recherche ciblées par le laboratoire CMED sont, entre autres :</strong></p>
+      <p>– Mathématiques, Modélisation et Simulations numériques</p>
+      <p>– Big Data, IA, IoT</p>
+      <p>– Océanographie</p>
+      <p>– Physique et Spatiale</p>
+      <p>– Dynamique Physique du Littoral</p>
+      <p>– Économie bleue</p>
+      <p>– Aménagement du littoral</p>
+      <p>– Écosystèmes, biodiversité et services écosystémiques de l'environnement marin et côtier</p>
+      <p>– Nanosciences, Nanotechnologie et Matériaux</p>
+      <p>– Climat et Impacts, Changement climatique et Résilience</p>
+      <p>– Énergies</p>
+      <p>– Eau, Environnement et Développement durable</p>
+      <p>– Sciences et Technologies spatiales</p>
+      <p>– Gestion des ressources halieutiques et des écosystèmes côtiers et marins</p>
+      <p>– Biotechnologie</p>
+      <p>– Gestion de l'environnement</p>
+      <p>– Économie appliquée</p>
+      <p>– Droit des activités maritimes</p>
+      <p>– Sciences de la Terre, des Planètes et de l'Environnement</p>
+      <p>– Chimie et sciences du vivant</p>
+      <p>– Sciences marines, Master International</p>
+      <p>– Génie côtier</p>
+      <p>– Biodiversité marine, ressources marines, écosystèmes côtiers et marins</p>
+      <p>– Pêche / écologie halieutique</p>
+      <p>– Aquaculture</p>
+      <p>– Etc.</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

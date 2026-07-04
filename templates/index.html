@@ -26,7 +26,7 @@
   <div class="container">
     <div class="grid-4 stats-grid">
       <div class="stat-card">
-        <span class="stat-number">3</span>
+        <span class="stat-number">2</span>
         <span class="stat-label">Départements</span>
       </div>
       <div class="stat-card">
@@ -64,32 +64,19 @@
   </div>
 </section>
 
-<!-- DÉPARTEMENTS -->
+<!-- PRÉSENTATION -->
 <section class="section section-alt">
   <div class="container">
-    <h2 class="section-title">Nos départements</h2>
-    <p class="section-subtitle">Trois départements au service de votre réussite</p>
-    {% if departements %}
-      <div class="grid-3">
-        {% for dept in departements %}
-          <div class="dept-card">
-            <h3>{{ dept.nom }}</h3>
-            <p>{{ dept.description[:120] }}{% if dept.description|length > 120 %}...{% endif %}</p>
-            <a href="{{ url_for('departement_detail', id_departement=dept.id_departement) }}" class="btn btn-outline">Découvrir</a>
-          </div>
-        {% endfor %}
-      </div>
-      <div class="section-cta">
-        <a href="{{ url_for('departements') }}" class="btn btn-primary">Tous nos départements</a>
-      </div>
-    {% else %}
-      <p class="empty-state">Aucun département pour le moment.</p>
-    {% endif %}
+    <h2 class="section-title">Présentation</h2>
+    <div class="departement-presentation" style="max-width: none;">
+      <p>L'UFR Sciences et Technologies Avancées (STA) de l'UAM ambitionne d'être un creuset d'excellence académique pour le développement des talents, un véritable hub scientifique, technologique, numérique et d'innovation de référence en Afrique au service des besoins de développement socio-économique du Sénégal et au-delà.</p>
+      <p>Les étudiants et l'ensemble des acteurs y trouveront (i) des formations innovantes adaptées aux besoins du marché de l'emploi, (ii) un corps professoral qualifié et engagé, (iii) une dynamique partenariale très forte sur le plan académique et avec les entreprises et institutions de recherche, tant au niveau national qu'international, (iv) un environnement favorable à l'apprentissage, à l'acquisition de connaissances et de compétences, à l'éclosion des jeunes talents pour l'entreprenariat et le développement de startup.</p>
+    </div>
   </div>
 </section>
 
 <!-- DERNIÈRES ACTUALITÉS -->
-<section class="section">
+<section class="section section-alt">
   <div class="container">
     <h2 class="section-title">Dernières actualités</h2>
     <p class="section-subtitle">Suivez l'actualité de l'UFR STA</p>
@@ -118,31 +105,6 @@
       </div>
     {% else %}
       <p class="empty-state">Aucune actualité pour le moment.</p>
-    {% endif %}
-  </div>
-</section>
-
-<!-- DERNIÈRES ACTIVITÉS -->
-<section class="section section-alt">
-  <div class="container">
-    <h2 class="section-title">Dernières activités</h2>
-    <p class="section-subtitle">La vie de l'UFR STA en événements</p>
-    {% if activites %}
-      <div class="grid-3">
-        {% for act in activites %}
-          <div class="dept-card">
-            <h3>{{ act.titre }}</h3>
-            <p>{{ act.date_activite.strftime('%d/%m/%Y') }}{% if act.lieu %} — {{ act.lieu }}{% endif %}</p>
-            <p>{{ act.description[:100] }}{% if act.description and act.description|length > 100 %}...{% endif %}</p>
-            <a href="{{ url_for('activite_detail', id_activite=act.id_activite) }}" class="btn btn-outline">En savoir plus</a>
-          </div>
-        {% endfor %}
-      </div>
-      <div class="section-cta">
-        <a href="{{ url_for('activites') }}" class="btn btn-primary">Toutes les activités</a>
-      </div>
-    {% else %}
-      <p class="empty-state">Aucune activité pour le moment.</p>
     {% endif %}
   </div>
 </section>

@@ -85,18 +85,7 @@ def index():
     actualites = db_fetch_all(
         "SELECT * FROM actualite ORDER BY date_publication DESC LIMIT 5"
     )
-    # Dernières activités (3 max) pour l'accueil
-    activites = db_fetch_all(
-        "SELECT * FROM activite ORDER BY date_activite DESC LIMIT 3"
-    )
-    # Départements (3 max) pour l'accueil
-    departements = db_fetch_all(
-        "SELECT * FROM departement ORDER BY nom LIMIT 3"
-    )
-    return render_template('index.html',
-                           actualites=actualites,
-                           activites=activites,
-                           departements=departements)
+    return render_template('index.html', actualites=actualites)
 
 
 @app.route('/departements')
@@ -105,38 +94,9 @@ def departements():
     return render_template('departements.html', departements=departements)
 
 
-@app.route('/departements/<int:id_departement>')
-def departement_detail(id_departement):
-    departement = db_fetch_one(
-        "SELECT * FROM departement WHERE id_departement = %s",
-        (id_departement,)
-    )
-    if not departement:
-        flash('Département introuvable.', 'error')
-        return redirect(url_for('departements'))
-    formations = db_fetch_all(
-        "SELECT * FROM formation WHERE departement_id = %s ORDER BY niveau, nom",
-        (id_departement,)
-    )
-    enseignants = db_fetch_all(
-        "SELECT * FROM enseignant WHERE departement_id = %s ORDER BY nom",
-        (id_departement,)
-    )
-    return render_template('departement_detail.html',
-                           departement=departement,
-                           formations=formations,
-                           enseignants=enseignants)
-
-
 @app.route('/formations')
 def formations():
-    formations = db_fetch_all("""
-        SELECT f.*, d.nom AS nom_departement
-        FROM formation f
-        JOIN departement d ON f.departement_id = d.id_departement
-        ORDER BY d.nom, f.niveau, f.nom
-    """)
-    return render_template('formations.html', formations=formations)
+    return render_template('formations.html')
 
 
 @app.route('/formations/<int:id_formation>')
@@ -183,7 +143,12 @@ def actualite_detail(id_actualite):
 @app.route('/activites')
 def activites():
     activites = db_fetch_all(
-        "SELECT * FROM activite ORDER BY date_activite DESC"
+        """SELECT a.*,
+                  (SELECT p.chemin FROM photo p
+                   WHERE p.activite_id = a.id_activite
+                   ORDER BY p.date_ajout ASC LIMIT 1) AS photo
+           FROM activite a
+           ORDER BY a.date_activite DESC"""
     )
     return render_template('activites.html', activites=activites)
 
@@ -263,4 +228,3 @@ def contact():
 # Lancement
 if __name__ == '__main__':
     app.run(debug=True)
-

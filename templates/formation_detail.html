@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — {{ formation.nom }}{% endblock %}
+
+{% block meta_description %}{{ formation.nom }} — {{ formation.niveau }} à l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>{{ formation.nom }}</h1>
+  </div>
+</section>
+
+<!-- PRÉSENTATION -->
+<section class="section">
+  <div class="container">
+    <a href="{{ url_for('formations') }}" class="back-link">← Toutes les formations</a>
+    <h2 class="section-title">Informations générales</h2>
+    <div class="departement-presentation">
+      <p><strong>Nom :</strong> {{ formation.nom }}</p>
+      <p><strong>Département :</strong> {{ formation.nom_departement }}</p>
+      <p><strong>Niveau :</strong> {{ formation.niveau }}</p>
+      {% if formation.duree %}<p><strong>Durée :</strong> {{ formation.duree }}</p>{% endif %}
+      {% if formation.conditions_admission %}<p><strong>Conditions d'admission :</strong> {{ formation.conditions_admission }}</p>{% endif %}
+      {% if formation.debouches %}<p><strong>Débouchés :</strong> {{ formation.debouches }}</p>{% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Programme</h2>
+    {% if modules %}
+      {% for semestre, modules_semestre in modules|groupby('semestre') %}
+        <div class="departement-presentation">
+          <p><strong>{{ semestre }}</strong></p>
+          {% for module in modules_semestre %}
+            <p>{{ module.nom_module }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty-state">Programme non renseigné pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

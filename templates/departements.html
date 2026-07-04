@@ -16,7 +16,7 @@
     <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
          alt="Logo UFR STA" class="page-hero-logo" />
     <h1>Nos départements</h1>
-    <p>Trois départements au service de votre réussite</p>
+    <p>{{ departements|length }} départements au service de votre réussite</p>
   </div>
 </section>
 
@@ -24,18 +24,25 @@
 <section class="section">
   <div class="container">
     {% if departements %}
-      <div class="grid-3">
+      <div class="grid-2">
         {% for dept in departements %}
-          <div class="dept-card">
-            <h3>{{ dept.nom }}</h3>
-            <p>{{ dept.description }}</p>
-            {% if dept.responsable %}
-              <p><strong>Chef de département :</strong> {{ dept.responsable }}</p>
+          <article class="card">
+            {% if dept.id_departement == 1 %}
+              <img src="{{ url_for('static', filename='images/MIM.png') }}" alt="Responsable {{ dept.nom }}" class="card-img" />
+            {% elif dept.id_departement == 2 %}
+              <img src="{{ url_for('static', filename='images/SMU.png') }}" alt="Responsable {{ dept.nom }}" class="card-img" />
             {% endif %}
-            <a href="{{ url_for('departement_detail', id_departement=dept.id_departement) }}"
-               class="btn btn-outline">Découvrir</a>
-          </div>
+            <div class="card-body">
+              <h3 class="card-title">{{ dept.nom }}</h3>
+              <p class="card-text">{{ dept.description }}</p>
+              {% if dept.responsable %}<p class="card-text"><strong>Responsable :</strong> {{ dept.responsable }}</p>{% endif %}
+              {% if dept.contact %}<p class="card-text"><strong>Contact :</strong> {{ dept.contact }}</p>{% endif %}
+            </div>
+          </article>
         {% endfor %}
+      </div>
+      <div class="section-cta">
+        <a href="{{ url_for('formations') }}" class="btn btn-primary">Découvrir nos formations</a>
       </div>
     {% else %}
       <p class="empty-state">Aucun département pour le moment.</p>
