@@ -50,15 +50,21 @@
   <div class="container">
     <div class="directeur-bloc">
       <div class="directeur-photo">
+        {% if directeur %}<a href="{{ url_for('enseignant_detail', id_enseignant=directeur.id_enseignant) }}">{% endif %}
         <img src="{{ url_for('static', filename='images/coulibaly.png') }}"
              alt="Photo du Directeur de l'UFR STA" />
+        {% if directeur %}</a>{% endif %}
       </div>
       <div class="directeur-text">
         <span class="section-eyebrow">Mot du Directeur</span>
         <h2>Bienvenue à l'UFR STA</h2>
         <p>L'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow s'engage à offrir une formation d'excellence ancrée dans les réalités africaines et ouverte sur le monde.</p>
         <p>Notre ambition est de former des professionnels compétents, innovants et responsables, capables de relever les défis du développement durable au Sénégal et en Afrique.</p>
-        <p class="directeur-signature">Le Directeur de l'UFR STA</p>
+        {% if directeur %}
+          <p class="directeur-signature"><a href="{{ url_for('enseignant_detail', id_enseignant=directeur.id_enseignant) }}">Le Directeur de l'UFR STA</a></p>
+        {% else %}
+          <p class="directeur-signature">Le Directeur de l'UFR STA</p>
+        {% endif %}
       </div>
     </div>
   </div>

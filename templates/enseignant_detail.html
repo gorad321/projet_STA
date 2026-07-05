@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — {{ enseignant.nom }}{% endblock %}
+
+{% block meta_description %}{{ enseignant.nom }}{% if enseignant.grade %}, {{ enseignant.grade }}{% endif %} à l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>{{ enseignant.nom }}</h1>
+    {% if enseignant.grade %}
+      <p>{{ enseignant.grade }}{% if enseignant.discipline %} — Enseignant-chercheur en {{ enseignant.discipline }}{% endif %}</p>
+    {% endif %}
+    {% if enseignant.fonction %}<p>{{ enseignant.fonction }}</p>{% endif %}
+  </div>
+</section>
+
+<!-- DÉTAIL -->
+<section class="section">
+  <div class="container">
+    <a href="{{ url_for('enseignants') }}" class="back-link">← Tous les enseignants</a>
+    <div class="grid-2">
+      {% if enseignant.photo %}
+        <img src="{{ url_for('static', filename=enseignant.photo) }}"
+             alt="{{ enseignant.nom }}" class="enseignant-photo" />
+      {% else %}
+        <div class="card-img-placeholder"></div>
+      {% endif %}
+      <div>
+        <div class="departement-presentation">
+          <p><strong>Établissement :</strong> UFR Sciences et Technologies Avancées (STA)</p>
+          {% if enseignant.nom_departement %}<p><strong>Département :</strong> {{ enseignant.nom_departement }}</p>{% endif %}
+          {% if enseignant.specialite_cames %}<p><strong>Spécialité CAMES :</strong> {{ enseignant.specialite_cames }}</p>{% endif %}
+          {% if enseignant.email %}<p><strong>Email :</strong> <a href="mailto:{{ enseignant.email }}">{{ enseignant.email }}</a></p>{% endif %}
+        </div>
+        {% if enseignant.domaines_recherche %}
+          <div class="departement-presentation">
+            <p><strong>Thématique(s) de recherche :</strong></p>
+            <ul>
+              {% for theme in enseignant.domaines_recherche.split('\n') %}
+                {% if theme.strip() %}<li>{{ theme.strip() }}</li>{% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

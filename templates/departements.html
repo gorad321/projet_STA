@@ -35,7 +35,16 @@
             <div class="card-body">
               <h3 class="card-title">{{ dept.nom }}</h3>
               <p class="card-text">{{ dept.description }}</p>
-              {% if dept.responsable %}<p class="card-text"><strong>Responsable :</strong> {{ dept.responsable }}</p>{% endif %}
+              {% if dept.responsable %}
+                <p class="card-text">
+                  <strong>Responsable :</strong>
+                  {% if dept.responsable_id %}
+                    <a href="{{ url_for('enseignant_detail', id_enseignant=dept.responsable_id) }}">{{ dept.responsable }}</a>
+                  {% else %}
+                    {{ dept.responsable }}
+                  {% endif %}
+                </p>
+              {% endif %}
               {% if dept.contact %}<p class="card-text"><strong>Contact :</strong> {{ dept.contact }}</p>{% endif %}
             </div>
           </article>

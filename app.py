@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from itertools import groupby
 
 import pymysql
 import pymysql.cursors
@@ -11,6 +12,23 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'dev-secret-key')
+
+
+def group_programme(modules):
+    """Regroupe des lignes module_programme par semestre puis par unité d'enseignement,
+    en conservant l'ordre d'insertion (ordre officiel de la maquette)."""
+    programme = []
+    for semestre, sem_rows in groupby(modules, key=lambda m: m['semestre']):
+        ue_groups = []
+        for ue, ue_rows in groupby(sem_rows, key=lambda m: m['unite_enseignement']):
+            ue_rows = list(ue_rows)
+            ue_groups.append({
+                'nom': ue,
+                'credits': ue_rows[0]['credits'],
+                'elements': ue_rows,
+            })
+        programme.append({'semestre': semestre, 'ue_groups': ue_groups})
+    return programme
 
 
 # Connexion base de données
@@ -85,12 +103,20 @@ def index():
     actualites = db_fetch_all(
         "SELECT * FROM actualite ORDER BY date_publication DESC LIMIT 5"
     )
-    return render_template('index.html', actualites=actualites)
+    directeur = db_fetch_one(
+        "SELECT * FROM enseignant WHERE nom = 'Dr. Alioune COULIBALY'"
+    )
+    return render_template('index.html', actualites=actualites, directeur=directeur)
 
 
 @app.route('/departements')
 def departements():
-    departements = db_fetch_all("SELECT * FROM departement ORDER BY nom")
+    departements = db_fetch_all("""
+        SELECT d.*, e.id_enseignant AS responsable_id
+        FROM departement d
+        LEFT JOIN enseignant e ON e.nom = d.responsable
+        ORDER BY d.nom
+    """)
     return render_template('departements.html', departements=departements)
 
 
@@ -112,12 +138,31 @@ def formation_detail(id_formation):
         return redirect(url_for('formations'))
     modules = db_fetch_all("""
         SELECT * FROM module_programme
-        WHERE formation_id = %s
-        ORDER BY semestre, nom_module
+        WHERE formation_id = %s AND specialisation_id IS NULL
+        ORDER BY semestre, id_module
     """, (id_formation,))
+    specialisations = db_fetch_all("""
+        SELECT s.*, d.nom AS nom_departement_specialisation
+        FROM specialisation s
+        LEFT JOIN departement d ON s.departement_id = d.id_departement
+        WHERE s.formation_id = %s
+        ORDER BY s.id_specialisation
+    """, (id_formation,))
+    modules_specialisation = db_fetch_all("""
+        SELECT * FROM module_programme
+        WHERE formation_id = %s AND specialisation_id IS NOT NULL
+        ORDER BY specialisation_id, semestre, id_module
+    """, (id_formation,))
+    programme = group_programme(modules)
+    programme_specialisation = {
+        spe_id: group_programme(list(spe_rows))
+        for spe_id, spe_rows in groupby(modules_specialisation, key=lambda m: m['specialisation_id'])
+    }
     return render_template('formation_detail.html',
                            formation=formation,
-                           modules=modules)
+                           specialisations=specialisations,
+                           programme=programme,
+                           programme_specialisation=programme_specialisation)
 
 
 @app.route('/actualites')
@@ -204,6 +249,20 @@ def enseignants():
         ORDER BY e.nom
     """)
     return render_template('enseignants.html', enseignants=enseignants)
+
+
+@app.route('/enseignants/<int:id_enseignant>')
+def enseignant_detail(id_enseignant):
+    enseignant = db_fetch_one("""
+        SELECT e.*, d.nom AS nom_departement
+        FROM enseignant e
+        LEFT JOIN departement d ON e.departement_id = d.id_departement
+        WHERE e.id_enseignant = %s
+    """, (id_enseignant,))
+    if not enseignant:
+        flash('Enseignant introuvable.', 'error')
+        return redirect(url_for('enseignants'))
+    return render_template('enseignant_detail.html', enseignant=enseignant)
 
 
 @app.route('/contact', methods=['GET', 'POST'])

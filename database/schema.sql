@@ -23,8 +23,9 @@ CREATE TABLE formation (
     id_formation        INT AUTO_INCREMENT PRIMARY KEY,
     departement_id      INT NOT NULL,
     nom                 VARCHAR(150) NOT NULL,
-    niveau              VARCHAR(50) NOT NULL,        
-    duree               VARCHAR(50),                  
+    niveau              VARCHAR(50) NOT NULL,
+    duree               VARCHAR(50),
+    objectif            TEXT,
     conditions_admission TEXT,
     debouches           TEXT,
     date_creation       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -32,32 +33,58 @@ CREATE TABLE formation (
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- 3. MODULE_PROGRAMME (programme détaillé par semestre)
+-- 3. SPECIALISATION (filières au sein d'une formation, ex: MPI en S5)
+
+CREATE TABLE specialisation (
+    id_specialisation    INT AUTO_INCREMENT PRIMARY KEY,
+    formation_id         INT NOT NULL,
+    nom                  VARCHAR(150) NOT NULL,
+    semestre_debut       VARCHAR(50),                 -- ex: Semestre 5
+    description          TEXT,
+    debouches            TEXT,
+    departement_id       INT NULL,                    -- si la spécialisation migre vers un autre département
+    FOREIGN KEY (formation_id) REFERENCES formation(id_formation)
+        ON DELETE CASCADE,
+    FOREIGN KEY (departement_id) REFERENCES departement(id_departement)
+        ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+-- 4. MODULE_PROGRAMME (programme détaillé par semestre)
 
 CREATE TABLE module_programme (
     id_module           INT AUTO_INCREMENT PRIMARY KEY,
     formation_id         INT NOT NULL,
-    semestre             VARCHAR(50) NOT NULL,       
-    nom_module           VARCHAR(150) NOT NULL,
+    specialisation_id    INT NULL,                    -- NULL = tronc commun ; renseigné = programme propre à une spécialisation (S5/S6)
+    semestre             VARCHAR(50) NOT NULL,
+    unite_enseignement   VARCHAR(150) NOT NULL,        -- ex: "Mathématiques 1"
+    nom_module           VARCHAR(150) NOT NULL,         -- élément constitutif, ex: "Analyse 1"
+    vht                  INT,                           -- volume horaire total (heures)
+    credits              INT,                           -- crédits de l'UE (dupliqué sur chaque élément de l'UE)
+    coefficient          INT,
     FOREIGN KEY (formation_id) REFERENCES formation(id_formation)
+        ON DELETE CASCADE,
+    FOREIGN KEY (specialisation_id) REFERENCES specialisation(id_specialisation)
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- 4. ENSEIGNANT
+-- 5. ENSEIGNANT
 
 CREATE TABLE enseignant (
     id_enseignant        INT AUTO_INCREMENT PRIMARY KEY,
     departement_id       INT,
     nom                  VARCHAR(150) NOT NULL,
-    grade                VARCHAR(100),                -- ex: Maître de conférences
+    grade                VARCHAR(100),                -- ex: Maître de conférences, Professeur Titulaire
+    fonction             VARCHAR(255),                -- rôle additionnel, ex: Vice-Recteur chargé des Affaires pédagogiques
+    discipline           VARCHAR(255),                -- ex: "Nanosciences Nanotechnologie Matériaux" (utilisé dans "Enseignant-chercheur en ...")
+    specialite_cames     VARCHAR(150),                -- spécialité CAMES officielle, ex: "Physique : Milieux denses et matériaux"
     email                VARCHAR(150),
-    domaines_recherche   TEXT,
+    domaines_recherche   TEXT,                        -- thématiques de recherche, une par ligne
     photo                VARCHAR(255),                -- chemin du fichier image
     FOREIGN KEY (departement_id) REFERENCES departement(id_departement)
         ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
--- 5. ACTUALITE
+-- 6. ACTUALITE
 
 CREATE TABLE actualite (
     id_actualite        INT AUTO_INCREMENT PRIMARY KEY,
@@ -69,7 +96,7 @@ CREATE TABLE actualite (
     date_creation        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- 6. ACTIVITE
+-- 7. ACTIVITE
 
 CREATE TABLE activite (
     id_activite          INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,7 +108,7 @@ CREATE TABLE activite (
     date_creation        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- 7. ALBUM (galerie photo organisée par albums)
+-- 8. ALBUM (galerie photo organisée par albums)
 CREATE TABLE album (
     id_album             INT AUTO_INCREMENT PRIMARY KEY,
     titre                VARCHAR(150) NOT NULL,
@@ -90,7 +117,7 @@ CREATE TABLE album (
     date_creation         TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- 8. PHOTO (liée soit à une activité, soit à un album)
+-- 9. PHOTO (liée soit à une activité, soit à un album)
 
 CREATE TABLE photo (
     id_photo             INT AUTO_INCREMENT PRIMARY KEY,
@@ -109,7 +136,7 @@ CREATE TABLE photo (
     -- MariaDB (XAMPP).
 ) ENGINE=InnoDB;
 
--- 9. ADMIN (gestion des accès — mot de passe )
+-- 10. ADMIN (gestion des accès — mot de passe )
 
 CREATE TABLE admin (
     id_admin             INT AUTO_INCREMENT PRIMARY KEY,
@@ -122,6 +149,8 @@ CREATE TABLE admin (
 
 CREATE INDEX idx_formation_departement ON formation(departement_id);
 CREATE INDEX idx_module_formation ON module_programme(formation_id);
+CREATE INDEX idx_module_specialisation ON module_programme(specialisation_id);
+CREATE INDEX idx_specialisation_formation ON specialisation(formation_id);
 CREATE INDEX idx_enseignant_departement ON enseignant(departement_id);
 CREATE INDEX idx_photo_activite ON photo(activite_id);
 CREATE INDEX idx_photo_album ON photo(album_id);

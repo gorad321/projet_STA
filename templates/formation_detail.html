@@ -29,23 +29,69 @@
       <p><strong>Département :</strong> {{ formation.nom_departement }}</p>
       <p><strong>Niveau :</strong> {{ formation.niveau }}</p>
       {% if formation.duree %}<p><strong>Durée :</strong> {{ formation.duree }}</p>{% endif %}
+      {% if formation.objectif %}<p><strong>Objectif :</strong> {{ formation.objectif }}</p>{% endif %}
       {% if formation.conditions_admission %}<p><strong>Conditions d'admission :</strong> {{ formation.conditions_admission }}</p>{% endif %}
       {% if formation.debouches %}<p><strong>Débouchés :</strong> {{ formation.debouches }}</p>{% endif %}
     </div>
   </div>
 </section>
 
+<!-- SPÉCIALISATIONS -->
+{% if specialisations %}
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Spécialisations</h2>
+    <div class="departement-presentation">
+      <p>À partir du <strong>{{ specialisations[0].semestre_debut }}</strong>, les étudiants choisissent l'une des filières suivantes :</p>
+    </div>
+    <div class="grid-3">
+      {% for spe in specialisations %}
+        <article class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ spe.nom }}</h3>
+            <p class="card-text">{{ spe.description }}</p>
+            {% if spe.debouches %}<p class="card-text"><strong>Débouchés :</strong> {{ spe.debouches }}</p>{% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <!-- PROGRAMME -->
 <section class="section section-alt">
   <div class="container">
-    <h2 class="section-title">Programme</h2>
-    {% if modules %}
-      {% for semestre, modules_semestre in modules|groupby('semestre') %}
-        <div class="departement-presentation">
-          <p><strong>{{ semestre }}</strong></p>
-          {% for module in modules_semestre %}
-            <p>{{ module.nom_module }}</p>
-          {% endfor %}
+    <h2 class="section-title">{% if specialisations %}Programme (tronc commun){% else %}Programme{% endif %}</h2>
+    {% if programme %}
+      {% for sem in programme %}
+        <div class="programme-block">
+          <h3 class="programme-semestre-title">{{ sem.semestre }}</h3>
+          <div class="table-wrapper">
+            <table class="programme-table">
+              <thead>
+                <tr>
+                  <th>Élément constitutif</th>
+                  <th>VHT</th>
+                  <th>Coef.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ue in sem.ue_groups %}
+                  <tr class="ue-row">
+                    <td colspan="3">{{ ue.nom }}{% if ue.credits %} — {{ ue.credits }} crédits{% endif %}</td>
+                  </tr>
+                  {% for el in ue.elements %}
+                    <tr>
+                      <td>{{ el.nom_module }}</td>
+                      <td>{% if el.vht %}{{ el.vht }} h{% endif %}</td>
+                      <td>{{ el.coefficient }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       {% endfor %}
     {% else %}
@@ -53,5 +99,52 @@
     {% endif %}
   </div>
 </section>
+
+<!-- PROGRAMME APRÈS SPÉCIALISATION -->
+{% if specialisations %}
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Programme après spécialisation</h2>
+    {% for spe in specialisations %}
+      {% set spe_programme = programme_specialisation.get(spe.id_specialisation) %}
+      <div class="programme-block">
+        <p class="programme-specialisation-title"><strong>{{ spe.nom }}</strong></p>
+        {% if spe_programme %}
+          {% for sem in spe_programme %}
+            <h4 class="programme-semestre-title">{{ sem.semestre }}</h4>
+            <div class="table-wrapper">
+              <table class="programme-table">
+                <thead>
+                  <tr>
+                    <th>Élément constitutif</th>
+                    <th>VHT</th>
+                    <th>Coef.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ue in sem.ue_groups %}
+                    <tr class="ue-row">
+                      <td colspan="3">{{ ue.nom }}{% if ue.credits %} — {{ ue.credits }} crédits{% endif %}</td>
+                    </tr>
+                    {% for el in ue.elements %}
+                      <tr>
+                        <td>{{ el.nom_module }}</td>
+                        <td>{% if el.vht %}{{ el.vht }} h{% endif %}</td>
+                        <td>{{ el.coefficient }}</td>
+                      </tr>
+                    {% endfor %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="empty-state">Programme non renseigné pour le moment.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
 
 {% endblock %}

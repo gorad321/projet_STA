@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Enseignants{% endblock %}
+
+{% block meta_description %}Découvrez les enseignants et enseignants-chercheurs de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>Nos enseignants</h1>
+    <p>L'équipe pédagogique et de recherche de l'UFR STA</p>
+  </div>
+</section>
+
+<!-- LISTE DES ENSEIGNANTS -->
+<section class="section">
+  <div class="container">
+    {% if enseignants %}
+      <div class="grid-3">
+        {% for ens in enseignants %}
+          <article class="card">
+            {% if ens.photo %}
+              <img src="{{ url_for('static', filename=ens.photo) }}"
+                   alt="{{ ens.nom }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
+            {% endif %}
+            <div class="card-body">
+              <h3 class="card-title">{{ ens.nom }}</h3>
+              {% if ens.grade %}<p class="card-text"><strong>{{ ens.grade }}</strong></p>{% endif %}
+              {% if ens.nom_departement %}<p class="card-text">{{ ens.nom_departement }}</p>{% endif %}
+              {% if ens.domaines_recherche %}
+                <p class="card-text">{{ ens.domaines_recherche[:120] }}{% if ens.domaines_recherche|length > 120 %}...{% endif %}</p>
+              {% endif %}
+              <a href="{{ url_for('enseignant_detail', id_enseignant=ens.id_enseignant) }}" class="btn btn-outline">En savoir plus</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucun enseignant pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
