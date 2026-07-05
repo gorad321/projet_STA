@@ -111,6 +111,7 @@ CREATE TABLE activite (
     lieu                 VARCHAR(150),
     organisateur         VARCHAR(150),
     description          TEXT,
+    photo                VARCHAR(255),
     date_creation        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
@@ -171,6 +172,8 @@ TRUNCATE TABLE enseignant;
 TRUNCATE TABLE departement;
 TRUNCATE TABLE photo;
 TRUNCATE TABLE album;
+TRUNCATE TABLE activite;
+TRUNCATE TABLE actualite;
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO departement (nom, description, responsable, contact) VALUES
@@ -386,16 +389,14 @@ INSERT INTO enseignant (nom, grade, fonction, discipline, specialite_cames, doma
 -- ALBUMS GALERIE
 -- =====================================================
 INSERT INTO album (id_album, titre, description, date_album) VALUES
-(1, 'Hackathon UFR STA 2026', 'Photos de la compétition Hackathon organisée en mars 2026', '2026-03-08'),
-(2, 'Journée scientifique 2025', 'Galerie photos de la journée scientifique annuelle de l\'UFR STA', '2025-12-12'),
-(3, 'Visite Orange Sénégal', 'Photos de la sortie pédagogique au siège d\'Orange Sénégal', '2026-02-20'),
-(4, 'Projet IoT', 'Galerie consacrée aux projets d\'Internet des Objets (IoT) réalisés par les étudiants de l\'UFR STA. Cette édition met à l\'honneur la maquette d\'une maison connectée conçue par une équipe d\'étudiants, intégrant un clavier de contrôle d\'accès, un écran d\'affichage et un système de verrouillage automatisé — une illustration concrète des compétences en électronique embarquée et en programmation acquises durant leur formation.', '2026-07-05');
+(4, 'Projet IoT', 'Galerie consacrée aux projets d\'Internet des Objets (IoT) réalisés par les étudiants de l\'UFR STA. Cette édition met à l\'honneur la maquette d\'une maison connectée conçue par une équipe d\'étudiants, intégrant un clavier de contrôle d\'accès, un écran d\'affichage et un système de verrouillage automatisé — une illustration concrète des compétences en électronique embarquée et en programmation acquises durant leur formation.', '2026-07-05'),
+(5, 'Fun For Informatique', 'Galerie photos de \"Fun For Informatique\", un moment convivial organisé pour les étudiants du département Informatique de l\'UFR STA, alliant activités ludiques, esprit d\'équipe et bonne humeur.', '2026-07-05');
 
 -- =====================================================
 -- PHOTOS — Projet IoT (album_id=4)
 -- =====================================================
 INSERT INTO photo (album_id, chemin, legende) VALUES
-(4, 'images/galerie/image.png', 'Présentation du prototype de maison connectée par l\'équipe étudiante'),
+(4, 'images/galerie/thiap.jpg', 'Présentation du prototype de maison connectée par l\'équipe étudiante'),
 (4, 'images/galerie/5933712609414679985_121.jpg', NULL),
 (4, 'images/galerie/5933712609414679986_121.jpg', NULL),
 (4, 'images/galerie/5933712609414679988_121.jpg', NULL),
@@ -404,5 +405,33 @@ INSERT INTO photo (album_id, chemin, legende) VALUES
 (4, 'images/galerie/5933712609414679993_121.jpg', NULL),
 (4, 'images/galerie/5933712609414679994_121.jpg', NULL),
 (4, 'images/galerie/5933712609414679995_121.jpg', NULL),
-(4, 'images/galerie/5933712609414679996_121.jpg', NULL),
 (4, 'images/galerie/5933712609414679997_121.jpg', NULL);
+
+-- =====================================================
+-- PHOTOS — Fun For Informatique (album_id=5)
+-- =====================================================
+INSERT INTO photo (album_id, chemin, legende) VALUES
+(5, 'images/galerie/5933712609414680207_121.jpg', NULL),
+(5, 'images/galerie/5933712609414680209_121.jpg', NULL),
+(5, 'images/galerie/5933712609414680210_121.jpg', NULL),
+(5, 'images/galerie/5933712609414680211_121.jpg', NULL),
+(5, 'images/galerie/5933712609414680212_121.jpg', NULL);
+
+-- =====================================================
+-- ACTIVITES
+-- =====================================================
+INSERT INTO activite (titre, date_activite, lieu, organisateur, description, photo) VALUES
+('Atelier IA Générative', '2026-04-15', 'Salle Informatique — UFR STA', 'Département Informatique', 'Formation destinée aux étudiants de L3 Informatique sur l\'utilisation de l\'IA générative dans les projets académiques et professionnels. Thèmes abordés : prompting, outils IA, éthique de l\'IA.', 'images/galerie/5933712609414679994_121.jpg'),
+('Hackathon UFR STA 2026', '2026-03-08', 'Amphi A — UAM', 'Club Informatique UFR STA', 'Compétition de 24h réunissant les étudiants de l\'UFR STA autour de problématiques liées au numérique et au développement en Afrique. Prix pour les trois meilleures équipes.', 'images/galerie/5933712609414679995_121.jpg'),
+('Visite pédagogique — Entreprise Orange Sénégal', '2026-02-20', 'Siège Orange Sénégal, Dakar', 'Département Informatique', 'Sortie pédagogique au siège d\'Orange Sénégal pour découvrir les métiers du numérique et les infrastructures télécoms. 45 étudiants de L3 et Master ont participé.', 'images/galerie/5933712609414679990_121.jpg'),
+('Journée scientifique UFR STA', '2025-12-12', 'Campus UAM', 'Direction UFR STA', 'Journée dédiée à la présentation des travaux de recherche des enseignants et des projets des étudiants. Expositions, présentations et remise de prix aux meilleurs projets étudiants.', 'images/galerie/5933712609414679985_121.jpg');
+
+-- =====================================================
+-- ACTUALITES
+-- =====================================================
+INSERT INTO actualite (titre, date_publication, description, photo, type) VALUES
+('Résultats du concours d\'entrée en Licence 2025-2026', '2025-09-15', 'Les résultats du concours d\'entrée en Licence à l\'UFR STA pour l\'année académique 2025-2026 sont disponibles. Les candidats admis sont invités à procéder aux inscriptions administratives du 20 au 30 septembre 2025.', 'images/galerie/5933712609414679988_121.jpg', 'résultat'),
+('Séminaire international sur l\'IA et le développement durable', '2025-10-10', 'L\'UFR STA organise un séminaire international sur l\'Intelligence Artificielle et le développement durable en Afrique. L\'événement se tiendra les 25 et 26 octobre 2025 dans la salle de conférence de l\'UAM.', 'images/galerie/5933712609414680211_121.jpg', 'séminaire'),
+('Appel à candidature — Master Informatique 2026', '2026-01-05', 'L\'UFR STA lance un appel à candidature pour le Master Informatique, spécialité Intelligence Artificielle et Data Science, pour l\'année 2026-2027. Date limite de dépôt des dossiers : 28 février 2026.', 'images/galerie/5933712609414680209_121.jpg', 'appel'),
+('Conférence : Les métiers du numérique au Sénégal', '2026-03-20', 'Une conférence sur les métiers du numérique et les opportunités d\'emploi dans le secteur IT au Sénégal sera organisée le 5 avril 2026. Intervenants : professionnels de grandes entreprises technologiques.', 'images/galerie/5933712609414679997_121.jpg', 'conférence'),
+('Soutenances de mémoires de Master — Session juin 2026', '2026-05-28', 'Les soutenances de mémoires de Master de l\'UFR STA auront lieu du 15 au 25 juin 2026. Les étudiants concernés sont invités à déposer leurs mémoires au secrétariat avant le 31 mai 2026.', 'images/galerie/5933712609414679993_121.jpg', 'soutenance');

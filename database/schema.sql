@@ -105,6 +105,7 @@ CREATE TABLE activite (
     lieu                 VARCHAR(150),
     organisateur         VARCHAR(150),
     description          TEXT,
+    photo                VARCHAR(255),                -- chemin du fichier image
     date_creation        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
