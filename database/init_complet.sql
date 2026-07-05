@@ -169,6 +169,8 @@ TRUNCATE TABLE module_programme;
 TRUNCATE TABLE formation;
 TRUNCATE TABLE enseignant;
 TRUNCATE TABLE departement;
+TRUNCATE TABLE photo;
+TRUNCATE TABLE album;
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO departement (nom, description, responsable, contact) VALUES
@@ -379,3 +381,28 @@ INSERT INTO enseignant (nom, grade, fonction, discipline, specialite_cames, doma
  'Physique: Océanographie et Applications',
  'Dynamique Océanique (Hydrodynamique des fluides géophysiques)\nDynamique de l\'Upwelling côtier Ouest Africain\nPollution marine et dimensionnement d\'émissaire en mer\nChangement climatique et Événements extrêmes (Impact du changement climatique sur la dynamique océanique)\nModélisation hydrodynamique de l\'environnement marin et côtier',
  'images/Ndoye.png');
+
+-- =====================================================
+-- ALBUMS GALERIE
+-- =====================================================
+INSERT INTO album (id_album, titre, description, date_album) VALUES
+(1, 'Hackathon UFR STA 2026', 'Photos de la compétition Hackathon organisée en mars 2026', '2026-03-08'),
+(2, 'Journée scientifique 2025', 'Galerie photos de la journée scientifique annuelle de l\'UFR STA', '2025-12-12'),
+(3, 'Visite Orange Sénégal', 'Photos de la sortie pédagogique au siège d\'Orange Sénégal', '2026-02-20'),
+(4, 'Projet IoT', 'Galerie consacrée aux projets d\'Internet des Objets (IoT) réalisés par les étudiants de l\'UFR STA. Cette édition met à l\'honneur la maquette d\'une maison connectée conçue par une équipe d\'étudiants, intégrant un clavier de contrôle d\'accès, un écran d\'affichage et un système de verrouillage automatisé — une illustration concrète des compétences en électronique embarquée et en programmation acquises durant leur formation.', '2026-07-05');
+
+-- =====================================================
+-- PHOTOS — Projet IoT (album_id=4)
+-- =====================================================
+INSERT INTO photo (album_id, chemin, legende) VALUES
+(4, 'images/galerie/image.png', 'Présentation du prototype de maison connectée par l\'équipe étudiante'),
+(4, 'images/galerie/5933712609414679985_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679986_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679988_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679990_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679992_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679993_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679994_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679995_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679996_121.jpg', NULL),
+(4, 'images/galerie/5933712609414679997_121.jpg', NULL);

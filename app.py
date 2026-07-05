@@ -218,9 +218,14 @@ def activite_detail(id_activite):
 
 @app.route('/galerie')
 def galerie():
-    albums = db_fetch_all(
-        "SELECT * FROM album ORDER BY date_album DESC"
-    )
+    albums = db_fetch_all("""
+        SELECT a.*, p.chemin AS photo_couverture
+        FROM album a
+        LEFT JOIN photo p ON p.id_photo = (
+            SELECT MIN(id_photo) FROM photo WHERE album_id = a.id_album
+        )
+        ORDER BY a.date_album DESC
+    """)
     return render_template('galerie.html', albums=albums)
 
 

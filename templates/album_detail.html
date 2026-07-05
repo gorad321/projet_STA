@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — {{ album.titre }}{% endblock %}
+
+{% block meta_description %}{% if album.description %}{{ album.description[:150] }}{% else %}{{ album.titre }}{% endif %} — UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>{{ album.titre }}</h1>
+  </div>
+</section>
+
+<!-- PRÉSENTATION -->
+<section class="section">
+  <div class="container">
+    <a href="{{ url_for('galerie') }}" class="back-link">← Toute la galerie</a>
+    <div class="galerie-presentation">
+      <div class="galerie-presentation-photos">
+        {% if photos|length > 0 %}
+          <img src="{{ url_for('static', filename=photos[0].chemin) }}"
+               alt="{{ album.titre }}" class="galerie-presentation-photo-main" />
+        {% endif %}
+        {% if photos|length > 1 %}
+          <img src="{{ url_for('static', filename=photos[1].chemin) }}"
+               alt="{{ album.titre }}" class="galerie-presentation-photo-secondary" />
+        {% endif %}
+      </div>
+      <div class="galerie-presentation-text">
+        <span class="section-eyebrow">Galerie photos</span>
+        <h2>{{ album.titre }}</h2>
+        {% if album.date_album %}<p class="galerie-presentation-date">{{ album.date_album.strftime('%d/%m/%Y') }}</p>{% endif %}
+        {% if album.description %}<p>{{ album.description }}</p>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">Toutes les photos</h2>
+    {% if photos %}
+      <div class="grid-3">
+        {% for photo in photos %}
+          <figure>
+            <a href="{{ url_for('static', filename=photo.chemin) }}" class="lightbox-trigger">
+              <img src="{{ url_for('static', filename=photo.chemin) }}"
+                   alt="{{ photo.legende or album.titre }}" class="card-img" />
+            </a>
+            {% if photo.legende %}<figcaption class="card-text">{{ photo.legende }}</figcaption>{% endif %}
+          </figure>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucune photo pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox">
+  <button type="button" class="lightbox-close" aria-label="Fermer">&times;</button>
+  <img src="" alt="" class="lightbox-img" />
+</div>
+
+{% endblock %}

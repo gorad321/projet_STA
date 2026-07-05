@@ -791,3 +791,272 @@ p { margin-bottom: var(--space-sm); }
   .hero p  { font-size: 15px; }
   .stat-number { font-size: 32px; }
 }
+
+/* 17. GALERIE — CARTES ACCORDÉON */
+.galerie-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.galerie-container {
+  width: 100%;
+  max-width: 100%;
+  height: 400px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  overflow-x: auto;
+  padding: var(--space-xs);
+}
+
+.galerie-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 80px;
+  border-radius: 2rem;
+  background-color: var(--color-primary);
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin: 0 10px;
+  display: flex;
+  align-items: flex-end;
+  text-decoration: none;
+  transition: width 0.6s cubic-bezier(0.28, -0.03, 0, 0.99);
+  box-shadow: var(--shadow-card);
+}
+
+.galerie-card:hover,
+.galerie-card:last-child {
+  width: 480px;
+}
+
+/* La dernière carte se referme dès qu'une autre carte est survolée */
+.galerie-container:hover .galerie-card:last-child {
+  width: 80px;
+}
+
+.galerie-container:hover .galerie-card:last-child:hover {
+  width: 480px;
+}
+
+.galerie-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: backdrop-filter 0.3s ease;
+}
+
+.galerie-card:hover .galerie-row,
+.galerie-card:last-child .galerie-row {
+  backdrop-filter: blur(6px);
+  background-color: rgba(26, 58, 107, 0.35);
+}
+
+.galerie-container:hover .galerie-card:last-child .galerie-row {
+  backdrop-filter: none;
+  background-color: transparent;
+}
+
+.galerie-container:hover .galerie-card:last-child:hover .galerie-row {
+  backdrop-filter: blur(6px);
+  background-color: rgba(26, 58, 107, 0.35);
+}
+
+.galerie-icon {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  margin: 15px;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.galerie-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+}
+
+.galerie-card:hover .galerie-description,
+.galerie-card:last-child .galerie-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.galerie-container:hover .galerie-card:last-child .galerie-description {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.galerie-container:hover .galerie-card:last-child:hover .galerie-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.galerie-description h4 {
+  color: var(--color-white);
+  text-transform: uppercase;
+  font-size: var(--fs-body);
+  margin: 0;
+}
+
+.galerie-description p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--fs-small);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .galerie-container {
+    height: auto;
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .galerie-card {
+    width: 100%;
+    min-height: 80px;
+  }
+
+  .galerie-card:hover { width: 100%; }
+
+  .galerie-row { background-color: rgba(26, 58, 107, 0.45); }
+
+  .galerie-description {
+    opacity: 1;
+    transform: translateY(0);
+    white-space: normal;
+    height: auto;
+    padding: var(--space-xs) 0;
+  }
+}
+
+/* 18. LIGHTBOX (agrandissement des photos d'album) */
+.lightbox-trigger {
+  cursor: zoom-in;
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.9);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius-btn);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox-close:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 19. GALERIE — BLOC DE PRÉSENTATION (photos superposées + texte) */
+.galerie-presentation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+
+.galerie-presentation-photos {
+  position: relative;
+  min-height: 420px;
+}
+
+.galerie-presentation-photo-main,
+.galerie-presentation-photo-secondary {
+  position: absolute;
+  object-fit: cover;
+  border-radius: var(--radius-section);
+  border: 6px solid var(--color-bg);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.4s ease;
+}
+
+.galerie-presentation-photo-main:hover,
+.galerie-presentation-photo-secondary:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+
+.galerie-presentation-photo-main {
+  top: 0;
+  left: 0;
+  width: 78%;
+  height: 88%;
+  z-index: 1;
+}
+
+.galerie-presentation-photo-secondary {
+  bottom: 0;
+  right: 0;
+  width: 58%;
+  height: 55%;
+  z-index: 2;
+}
+
+.galerie-presentation-text .section-eyebrow { display: block; }
+
+.galerie-presentation-text h2 {
+  font-size: var(--fs-h1);
+  margin-bottom: var(--space-sm);
+}
+
+.galerie-presentation-date {
+  color: var(--color-text-light);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 900px) {
+  .galerie-presentation {
+    grid-template-columns: 1fr;
+  }
+
+  .galerie-presentation-photos {
+    min-height: 320px;
+  }
+}

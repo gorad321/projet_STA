@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}UFR STA — Galerie{% endblock %}
+
+{% block meta_description %}Galerie photos de l'UFR Sciences et Technologies Avancées de l'Université Amadou Mahtar Mbow.{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-hero">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='videos/hero.mp4') }}" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container page-hero-inner">
+    <img src="{{ url_for('static', filename='images/logo-ufr-sta.png') }}"
+         alt="Logo UFR STA" class="page-hero-logo" />
+    <h1>Galerie photos</h1>
+    <p>Revivez les moments forts de l'UFR STA en images</p>
+  </div>
+</section>
+
+<!-- GALERIE ACCORDÉON -->
+<section class="section">
+  <div class="container">
+    {% if albums %}
+      <div class="galerie-wrapper">
+        <div class="galerie-container">
+          {% for album in albums %}
+            <a href="{{ url_for('album_detail', id_album=album.id_album) }}"
+               class="galerie-card"
+               {% if album.photo_couverture %}style="background-image: url('{{ url_for('static', filename=album.photo_couverture) }}');"{% endif %}>
+              <div class="galerie-row">
+                <div class="galerie-icon">{{ loop.index }}</div>
+                <div class="galerie-description">
+                  <h4>{{ album.titre }}</h4>
+                  {% if album.date_album %}<p>{{ album.date_album.strftime('%d/%m/%Y') }}</p>{% endif %}
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <p class="empty-state">Aucun album pour le moment.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
