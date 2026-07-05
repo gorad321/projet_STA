@@ -338,16 +338,6 @@ p { margin-bottom: var(--space-sm); }
   margin-bottom: var(--space-lg);
 }
 
-.section-title::after {
-  content: '';
-  display: block;
-  width: 48px;
-  height: 3px;
-  background-color: var(--color-accent);
-  margin: var(--space-xs) auto 0;
-  border-radius: 2px;
-}
-
 /* 11. BADGES */
 .badge {
   display: inline-block;
