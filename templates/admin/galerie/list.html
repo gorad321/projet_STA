@@ -1,0 +1,44 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Galerie — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Galerie — Albums</h1>
+  <a href="{{ url_for('admin_album_nouveau') }}" class="btn btn-primary">+ Ajouter un album</a>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Date</th>
+        <th>Photos</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for album in albums %}
+        <tr>
+          <td>{{ album.titre }}</td>
+          <td>{{ album.date_album.strftime('%d/%m/%Y') if album.date_album else '—' }}</td>
+          <td>{{ album.nb_photos }}</td>
+          <td>
+            <div class="admin-actions">
+              <a href="{{ url_for('admin_album_photos', id_album=album.id_album) }}" class="btn btn-outline btn-sm">Photos</a>
+              <a href="{{ url_for('admin_album_modifier', id_album=album.id_album) }}" class="btn btn-outline btn-sm">Modifier</a>
+              <form method="POST" action="{{ url_for('admin_album_supprimer', id_album=album.id_album) }}" onsubmit="return confirm('Supprimer cet album et toutes ses photos ?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="4" class="empty-state">Aucun album pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

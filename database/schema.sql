@@ -14,6 +14,7 @@ CREATE TABLE departement (
     description         TEXT,
     responsable         VARCHAR(150),
     contact             VARCHAR(150),
+    photo               VARCHAR(255),                -- chemin du fichier image
     date_creation       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
@@ -28,6 +29,7 @@ CREATE TABLE formation (
     objectif            TEXT,
     conditions_admission TEXT,
     debouches           TEXT,
+    photo               VARCHAR(255),                -- chemin du fichier image
     date_creation       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (departement_id) REFERENCES departement(id_departement)
         ON DELETE CASCADE
@@ -126,6 +128,7 @@ CREATE TABLE photo (
     album_id             INT NULL,
     chemin               VARCHAR(255) NOT NULL,       -- ex: images/activites/atelier_ia_1.jpg
     legende              VARCHAR(200),
+    ordre_affichage       INT NULL,                    -- 1 = photo principale, 2 = photo secondaire (mises en avant sur album_detail)
     date_ajout           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (activite_id) REFERENCES activite(id_activite)
         ON DELETE CASCADE,

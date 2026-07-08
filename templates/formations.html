@@ -25,7 +25,6 @@
   <div class="container">
     <div class="departement-presentation">
       <p>L'UFR STA place le curseur sur des formations innovantes dans le domaine des STEMS, conformément aux recommandations de la Concertation Nationale sur l'Avenir de l'Enseignement Supérieur (CNAES). Elle développe un modèle pédagogique intégré qui aligne « Formation professionnelle » et « Formation par la Recherche ».</p>
-      <p>L'UFR Sciences et Technologies Avancées de l'UAM délivre des diplômes de Licence, de Master et de Doctorat. En fonction des besoins du marché de l'emploi et des demandes du milieu socio-professionnel (VAE), l'UFR STA proposera des formations certifiantes avec la délivrance d'un certificat.</p>
     </div>
   </div>
 </section>
@@ -34,40 +33,29 @@
 <section class="section section-alt">
   <div class="container">
     <h2 class="section-title">Nos formations</h2>
-    <div class="departement-presentation">
-      <p><strong>MIM — Mathématiques, Informatique et Modélisation</strong></p>
-    </div>
-    <div class="grid-2" style="margin-bottom: var(--space-xl);">
-      <article class="card">
-        <img src="{{ url_for('static', filename='images/MPI.jpg') }}" alt="Filière Mathématiques, Physique et Informatique" class="card-img" />
-        <div class="card-body">
-          <h3 class="card-title">Mathématiques, Physique et Informatique (MPI)</h3>
-          <p class="card-text">Cette filière a pour objectif de permettre aux étudiants d'acquérir des connaissances fondamentales, de développer des compétences analytiques et de résolution de problèmes, et de préparer aux spécialisations et à la recherche scientifique.</p>
-          <a href="{{ url_for('formation_detail', id_formation=1) }}" class="btn btn-outline">Voir la formation</a>
-        </div>
-      </article>
-      <article class="card">
-        <img src="{{ url_for('static', filename='images/MIASS.jpg') }}" alt="Filière Mathématiques Informatique Appliquées aux Sciences Sociales" class="card-img" />
-        <div class="card-body">
-          <h3 class="card-title">Mathématiques Informatique Appliquées aux Sciences Sociales (MIASS)</h3>
-          <p class="card-text">Cette filière a pour objectif de former des spécialistes dans les métiers de la finance, de l'économie et de la gestion des organisations et de l'entreprise, en combinant les outils mathématiques et informatiques pour l'analyse des phénomènes économiques et sociaux.</p>
-          <a href="{{ url_for('formation_detail', id_formation=2) }}" class="btn btn-outline">Voir la formation</a>
-        </div>
-      </article>
-    </div>
-    <div class="departement-presentation">
-      <p><strong>SMU — Sciences de la Matière et de l'Univers</strong></p>
-    </div>
-    <div class="grid-2">
-      <article class="card">
-        <img src="{{ url_for('static', filename='images/SML.jpg') }}" alt="Filière Sciences de la Mer et du Littoral" class="card-img" />
-        <div class="card-body">
-          <h3 class="card-title">Sciences de la Mer et du Littoral (SML)</h3>
-          <p class="card-text">Cette filière prépare les étudiants aux métiers de la protection et de l'aménagement des côtes, de la gestion des ressources marines et des écosystèmes côtiers, et de l'économie bleue.</p>
-          <a href="{{ url_for('formation_detail', id_formation=3) }}" class="btn btn-outline">Voir la formation</a>
-        </div>
-      </article>
-    </div>
+    {% for nom_departement, formations_dept in formations|groupby('nom_departement') %}
+      <div class="departement-presentation">
+        <p><strong>{{ nom_departement }}</strong></p>
+      </div>
+      <div class="grid-2" style="margin-bottom: var(--space-xl);">
+        {% for f in formations_dept %}
+          <article class="card">
+            {% if f.photo %}
+              <img src="{{ url_for('static', filename=f.photo) }}" alt="{{ f.nom }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
+            {% endif %}
+            <div class="card-body">
+              <h3 class="card-title">{{ f.nom }}</h3>
+              {% if f.objectif %}<p class="card-text">{{ f.objectif }}</p>{% endif %}
+              <a href="{{ url_for('formation_detail', id_formation=f.id_formation) }}" class="btn btn-outline">Voir la formation</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">Aucune formation pour le moment.</p>
+    {% endfor %}
   </div>
 </section>
 

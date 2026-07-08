@@ -27,9 +27,9 @@
       <div class="galerie-wrapper">
         <div class="galerie-container">
           {% for album in albums %}
-            <a href="{{ url_for('album_detail', id_album=album.id_album) }}"
-               class="galerie-card"
-               {% if album.photo_couverture %}style="background-image: url('{{ url_for('static', filename=album.photo_couverture) }}');"{% endif %}>
+            <a href="{{ url_for('album_detail', id_album=album.id_album) }}" class="galerie-card">
+              <div class="galerie-card-bg"
+                   {% if album.photo_couverture %}style="background-image: url('{{ url_for('static', filename=album.photo_couverture) }}');"{% endif %}></div>
               <div class="galerie-row">
                 <div class="galerie-icon">{{ loop.index }}</div>
                 <div class="galerie-description">

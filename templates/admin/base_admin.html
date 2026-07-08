@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Administration — UFR STA{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}" />
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <div class="admin-sidebar-brand">UFR STA — Admin</div>
+      <button class="admin-nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="admin-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <nav class="admin-nav" id="admin-nav">
+      <a href="{{ url_for('admin_dashboard') }}" class="{% if request.endpoint == 'admin_dashboard' %}active{% endif %}">Tableau de bord</a>
+      <a href="{{ url_for('admin_departements') }}" class="{% if request.endpoint and request.endpoint.startswith('admin_departement') %}active{% endif %}">Départements</a>
+      <a href="{{ url_for('admin_formations') }}" class="{% if request.endpoint and request.endpoint.startswith('admin_formation') %}active{% endif %}">Formations</a>
+      <a href="{{ url_for('admin_enseignants') }}" class="{% if request.endpoint and request.endpoint.startswith('admin_enseignant') %}active{% endif %}">Enseignants</a>
+      <a href="{{ url_for('admin_actualites') }}" class="{% if request.endpoint and request.endpoint.startswith('admin_actualite') %}active{% endif %}">Actualités</a>
+      <a href="{{ url_for('admin_activites') }}" class="{% if request.endpoint and request.endpoint.startswith('admin_activite') %}active{% endif %}">Activités</a>
+      <a href="{{ url_for('admin_galerie') }}" class="{% if request.endpoint and (request.endpoint.startswith('admin_galerie') or request.endpoint.startswith('admin_album')) %}active{% endif %}">Galerie</a>
+      <div class="admin-nav-logout">
+        <a href="{{ url_for('index') }}">← Voir le site</a>
+        <a href="{{ url_for('admin_logout') }}">Déconnexion{% if session.get('admin_nom') %} ({{ session.get('admin_nom') }}){% endif %}</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}" role="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

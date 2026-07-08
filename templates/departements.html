@@ -27,10 +27,10 @@
       <div class="grid-2">
         {% for dept in departements %}
           <article class="card">
-            {% if dept.id_departement == 1 %}
-              <img src="{{ url_for('static', filename='images/MIM.png') }}" alt="Responsable {{ dept.nom }}" class="card-img" />
-            {% elif dept.id_departement == 2 %}
-              <img src="{{ url_for('static', filename='images/SMU.png') }}" alt="Responsable {{ dept.nom }}" class="card-img" />
+            {% if dept.photo %}
+              <img src="{{ url_for('static', filename=dept.photo) }}" alt="{{ dept.nom }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
             {% endif %}
             <div class="card-body">
               <h3 class="card-title">{{ dept.nom }}</h3>

@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Départements — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Départements</h1>
+  <a href="{{ url_for('admin_departement_nouveau') }}" class="btn btn-primary">+ Ajouter</a>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Responsable</th>
+        <th>Contact</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dept in departements %}
+        <tr>
+          <td>
+            {% if dept.photo %}
+              <img src="{{ url_for('static', filename=dept.photo) }}" alt="{{ dept.nom }}" class="admin-thumb" />
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td>{{ dept.nom }}</td>
+          <td>{{ dept.responsable or '—' }}</td>
+          <td>{{ dept.contact or '—' }}</td>
+          <td>
+            <div class="admin-actions">
+              <a href="{{ url_for('admin_departement_modifier', id_departement=dept.id_departement) }}" class="btn btn-outline btn-sm">Modifier</a>
+              <form method="POST" action="{{ url_for('admin_departement_supprimer', id_departement=dept.id_departement) }}" onsubmit="return confirm('Supprimer ce département ?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="empty-state">Aucun département pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

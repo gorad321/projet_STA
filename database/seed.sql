@@ -12,33 +12,36 @@ TRUNCATE TABLE activite;
 TRUNCATE TABLE actualite;
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO departement (nom, description, responsable, contact) VALUES
+INSERT INTO departement (nom, description, responsable, contact, photo) VALUES
 ('Mathématiques, Informatique et Modélisation',
  'Le département Mathématiques, Informatique et Modélisation (MIM) forme les esprits analytiques et les bâtisseurs du numérique de demain. À travers ses filières Mathématiques, Physique et Informatique (MPI) et Mathématiques Informatique Appliquées aux Sciences Sociales (MIASS), il allie rigueur scientifique et créativité technologique pour préparer des experts en data science, intelligence artificielle, cybersécurité et modélisation mathématique. Porté par une équipe pédagogique engagée et des partenariats académiques solides, le département MIM ouvre la voie à des carrières passionnantes au cœur de la révolution numérique en Afrique et dans le monde.',
- 'Dr. Thierno Mohamadane Mansour SOW', 'mim.sta@uam.edu.sn'),
+ 'Dr. Thierno Mohamadane Mansour SOW', 'mim.sta@uam.edu.sn', 'images/MIM.png'),
 
 ('Sciences de la Matière et de l\'Univers',
  'Le département Sciences de la Matière et de l\'Univers (SMU) invite à explorer les mystères de notre planète et de la matière qui nous entoure. Ses filières Sciences de la Mer et du Littoral (SML) et Physique et Applications (PA) forment des scientifiques capables de relever les défis environnementaux, énergétiques et technologiques majeurs de notre époque. Entre recherche de terrain, laboratoires modernes et projets innovants, les étudiants du SMU acquièrent une expertise reconnue en océanographie, physique appliquée et gestion durable des ressources naturelles, au service du développement du Sénégal et de l\'Afrique.',
- 'Dr. Makha NDAO', 'smu.sta@uam.edu.sn');
+ 'Dr. Makha NDAO', 'smu.sta@uam.edu.sn', 'images/SMU.png');
 
 -- =====================================================
 -- FORMATIONS
 -- =====================================================
-INSERT INTO formation (id_formation, departement_id, nom, niveau, duree, objectif, conditions_admission, debouches) VALUES
+INSERT INTO formation (id_formation, departement_id, nom, niveau, duree, objectif, conditions_admission, debouches, photo) VALUES
 (1, 1, 'Mathématiques, Physique et Informatique (MPI)', 'Licence', '3 ans',
  'Cette filière a pour objectif de permettre aux étudiants d\'acquérir des connaissances fondamentales, de développer des compétences analytiques et de résolution de problèmes, et de préparer aux spécialisations et à la recherche scientifique. À partir du Semestre 5, les étudiants choisissent l\'une des trois spécialisations proposées ci-dessous.',
  'Séries S1, S1A, S2, S2A, S3, S4.',
- NULL),
+ NULL,
+ 'images/MPI.jpg'),
 
 (2, 1, 'Mathématiques Informatique Appliquées aux Sciences Sociales (MIASS)', 'Licence', '3 ans',
  'Cette filière a pour objectif de former des spécialistes dans les métiers de la finance, de l\'économie et de la gestion des organisations et de l\'entreprise, en combinant les outils mathématiques et informatiques pour l\'analyse des phénomènes économiques et sociaux.',
  'Séries S1, S1A, S2, S2A, S3, S4, STEG.',
- 'Actuariat, audit, analyste quantitatif, trader, gestionnaire de portefeuille, ingénierie financière, chargé d\'études statistiques, data analyst, contrôleur de gestion, économiste d\'entreprise, entrepreneuriat, poursuite en Master.'),
+ 'Actuariat, audit, analyste quantitatif, trader, gestionnaire de portefeuille, ingénierie financière, chargé d\'études statistiques, data analyst, contrôleur de gestion, économiste d\'entreprise, entrepreneuriat, poursuite en Master.',
+ 'images/MIASS.jpg'),
 
 (3, 2, 'Sciences de la Mer et du Littoral (SML)', 'Licence', '3 ans',
  'Cette filière prépare les étudiants aux métiers de la protection et de l\'aménagement des côtes, de la gestion des ressources marines et des écosystèmes côtiers, et de l\'économie bleue.',
  'Séries S1, S1A, S2, S2A, S3, S4.',
- 'Chercheur en biologie et écologie marine, ingénieur d\'étude en environnement littoral et marin (bureaux d\'études, collectivités territoriales, aires marines protégées), chargé de mission dans le domaine des ressources marines vivantes (aquaculture, pêche), ingénieur en dimensionnement d\'ouvrages côtiers et portuaires, technicien supérieur en métrologie et gestion du littoral, cadre écologue, responsable environnement, poursuite en Master Sciences de la Mer.');
+ 'Chercheur en biologie et écologie marine, ingénieur d\'étude en environnement littoral et marin (bureaux d\'études, collectivités territoriales, aires marines protégées), chargé de mission dans le domaine des ressources marines vivantes (aquaculture, pêche), ingénieur en dimensionnement d\'ouvrages côtiers et portuaires, technicien supérieur en métrologie et gestion du littoral, cadre écologue, responsable environnement, poursuite en Master Sciences de la Mer.',
+ 'images/SML.jpg');
 
 -- =====================================================
 -- SPECIALISATIONS (MPI — à partir du Semestre 5)
@@ -271,3 +274,11 @@ INSERT INTO actualite (titre, date_publication, description, photo, type) VALUES
 ('Appel à candidature — Master Informatique 2026', '2026-01-05', 'L\'UFR STA lance un appel à candidature pour le Master Informatique, spécialité Intelligence Artificielle et Data Science, pour l\'année 2026-2027. Date limite de dépôt des dossiers : 28 février 2026.', 'images/galerie/5933712609414680209_121.jpg', 'appel'),
 ('Conférence : Les métiers du numérique au Sénégal', '2026-03-20', 'Une conférence sur les métiers du numérique et les opportunités d\'emploi dans le secteur IT au Sénégal sera organisée le 5 avril 2026. Intervenants : professionnels de grandes entreprises technologiques.', 'images/galerie/5933712609414679997_121.jpg', 'conférence'),
 ('Soutenances de mémoires de Master — Session juin 2026', '2026-05-28', 'Les soutenances de mémoires de Master de l\'UFR STA auront lieu du 15 au 25 juin 2026. Les étudiants concernés sont invités à déposer leurs mémoires au secrétariat avant le 31 mai 2026.', 'images/galerie/5933712609414679993_121.jpg', 'soutenance');
+
+-- =====================================================
+-- ADMIN (compte par défaut : admin / admin123 — mot de passe hashé bcrypt)
+-- N'écrase pas un mot de passe déjà modifié via l'interface d'administration.
+-- =====================================================
+INSERT INTO admin (nom_utilisateur, mot_de_passe) VALUES
+('admin', '$2b$12$eJ3VbRrh31s4oVcNxQ4HPe55jNA34R/tbjA1ISEqPHTQ57H7JOd7e')
+ON DUPLICATE KEY UPDATE nom_utilisateur = nom_utilisateur;

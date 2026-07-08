@@ -1,0 +1,102 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Programme — {{ formation.nom }} — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Programme — {{ formation.nom }}</h1>
+  <a href="{{ url_for('admin_formations') }}" class="btn btn-outline">← Retour aux formations</a>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Semestre</th>
+        <th>UE</th>
+        <th>Élément constitutif</th>
+        <th>VHT</th>
+        <th>Crédits</th>
+        <th>Coef.</th>
+        <th>Spécialisation</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in modules %}
+        <tr>
+          <td>{{ m.semestre }}</td>
+          <td>{{ m.unite_enseignement }}</td>
+          <td>{{ m.nom_module }}</td>
+          <td>{{ m.vht or '—' }}</td>
+          <td>{{ m.credits or '—' }}</td>
+          <td>{{ m.coefficient or '—' }}</td>
+          <td>{{ m.nom_specialisation or 'Tronc commun' }}</td>
+          <td>
+            <div class="admin-actions">
+              <a href="{{ url_for('admin_module_modifier', id_formation=formation.id_formation, id_module=m.id_module) }}" class="btn btn-outline btn-sm">Modifier</a>
+              <form method="POST" action="{{ url_for('admin_module_supprimer', id_formation=formation.id_formation, id_module=m.id_module) }}" onsubmit="return confirm('Supprimer ce module ?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="8" class="empty-state">Aucun module pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h2 style="margin-top: var(--space-xl); margin-bottom: var(--space-sm);">Ajouter un module</h2>
+<div class="admin-form-wrapper">
+  <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+    <div class="form-group">
+      <label for="semestre">Semestre *</label>
+      <input type="text" id="semestre" name="semestre" placeholder="ex: Semestre 1" required />
+    </div>
+
+    <div class="form-group">
+      <label for="unite_enseignement">Unité d'enseignement *</label>
+      <input type="text" id="unite_enseignement" name="unite_enseignement" placeholder="ex: Mathématiques 1" required />
+    </div>
+
+    <div class="form-group">
+      <label for="nom_module">Élément constitutif *</label>
+      <input type="text" id="nom_module" name="nom_module" placeholder="ex: Analyse 1" required />
+    </div>
+
+    <div class="form-group">
+      <label for="vht">VHT (heures)</label>
+      <input type="number" id="vht" name="vht" min="0" />
+    </div>
+
+    <div class="form-group">
+      <label for="credits">Crédits (de l'UE)</label>
+      <input type="number" id="credits" name="credits" min="0" />
+    </div>
+
+    <div class="form-group">
+      <label for="coefficient">Coefficient</label>
+      <input type="number" id="coefficient" name="coefficient" min="0" />
+    </div>
+
+    <div class="form-group">
+      <label for="specialisation_id">Spécialisation</label>
+      <select id="specialisation_id" name="specialisation_id">
+        <option value="">Tronc commun</option>
+        {% for spe in specialisations %}
+          <option value="{{ spe.id_specialisation }}">{{ spe.nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="admin-form-actions">
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

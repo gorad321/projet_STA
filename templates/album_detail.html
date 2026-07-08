@@ -25,12 +25,12 @@
     <a href="{{ url_for('galerie') }}" class="back-link">← Toute la galerie</a>
     <div class="galerie-presentation">
       <div class="galerie-presentation-photos">
-        {% if photos|length > 0 %}
-          <img src="{{ url_for('static', filename=photos[0].chemin) }}"
+        {% if photo_principale %}
+          <img src="{{ url_for('static', filename=photo_principale.chemin) }}"
                alt="{{ album.titre }}" class="galerie-presentation-photo-main" />
         {% endif %}
-        {% if photos|length > 1 %}
-          <img src="{{ url_for('static', filename=photos[1].chemin) }}"
+        {% if photo_secondaire %}
+          <img src="{{ url_for('static', filename=photo_secondaire.chemin) }}"
                alt="{{ album.titre }}" class="galerie-presentation-photo-secondary" />
         {% endif %}
       </div>

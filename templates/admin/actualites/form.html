@@ -1,0 +1,50 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}{% if item %}Modifier{% else %}Ajouter{% endif %} une actualité — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>{% if item %}Modifier{% else %}Ajouter{% endif %} une actualité</h1>
+</div>
+
+<div class="admin-form-wrapper">
+  <form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+    <div class="form-group">
+      <label for="titre">Titre *</label>
+      <input type="text" id="titre" name="titre" value="{{ item.titre if item else '' }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="date_publication">Date de publication *</label>
+      <input type="date" id="date_publication" name="date_publication" value="{{ item.date_publication.isoformat() if item and item.date_publication else '' }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <input type="text" id="type" name="type" value="{{ item.type if item else '' }}" placeholder="ex: séminaire, conférence, appel, résultat, soutenance" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="5">{{ item.description if item else '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      {% if item and item.photo %}
+        <div class="admin-current-photo">
+          <img src="{{ url_for('static', filename=item.photo) }}" alt="{{ item.titre }}" />
+        </div>
+      {% endif %}
+      <label for="photo">Photo{% if item %} (laisser vide pour conserver l'actuelle){% endif %}</label>
+      <input type="file" id="photo" name="photo" accept="image/*" />
+    </div>
+
+    <div class="admin-form-actions">
+      <button type="submit" class="btn btn-primary">{% if item %}Enregistrer{% else %}Créer{% endif %}</button>
+      <a href="{{ url_for('admin_actualites') }}" class="btn btn-outline">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

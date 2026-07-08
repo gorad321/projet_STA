@@ -27,7 +27,7 @@
 <section class="section">
   <div class="container">
     <a href="{{ url_for('enseignants') }}" class="back-link">← Tous les enseignants</a>
-    <div class="grid-2">
+    <div class="grid-2 enseignant-grid">
       {% if enseignant.photo %}
         <img src="{{ url_for('static', filename=enseignant.photo) }}"
              alt="{{ enseignant.nom }}" class="enseignant-photo" />

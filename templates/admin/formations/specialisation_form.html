@@ -1,0 +1,50 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Modifier une spécialisation — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Modifier la spécialisation — {{ formation.nom }}</h1>
+</div>
+
+<div class="admin-form-wrapper">
+  <form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+    <div class="form-group">
+      <label for="nom">Nom *</label>
+      <input type="text" id="nom" name="nom" value="{{ item.nom }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="semestre_debut">Semestre de début</label>
+      <input type="text" id="semestre_debut" name="semestre_debut" value="{{ item.semestre_debut or '' }}" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4">{{ item.description or '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="debouches">Débouchés</label>
+      <textarea id="debouches" name="debouches" rows="3">{{ item.debouches or '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="departement_id">Rattachée à un autre département (si migration)</label>
+      <select id="departement_id" name="departement_id">
+        <option value="">— (reste dans le même département)</option>
+        {% for dept in departements %}
+          <option value="{{ dept.id_departement }}" {% if item.departement_id == dept.id_departement %}selected{% endif %}>{{ dept.nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="admin-form-actions">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <a href="{{ url_for('admin_specialisations', id_formation=formation.id_formation) }}" class="btn btn-outline">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

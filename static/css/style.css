@@ -466,13 +466,30 @@ p { margin-bottom: var(--space-sm); }
     --fs-h1: 26px;
     --fs-h2: 20px;
     --fs-h3: 18px;
+    --navbar-height: 64px;
   }
 
   .grid-2,
   .grid-3,
   .grid-4 { grid-template-columns: 1fr; }
 
+  .enseignants-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
   .footer-grid { grid-template-columns: 1fr; }
+
+  .navbar-brand img.logo-uam { height: 48px; }
+
+  .page-hero-logo { height: 56px; }
+
+  .hero-actions .btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .section { padding: var(--space-lg) 0; }
 }
 
 /* 16. PAGE ACCUEIL */
@@ -728,6 +745,7 @@ p { margin-bottom: var(--space-sm); }
 
 .table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   margin-bottom: var(--space-sm);
@@ -783,13 +801,26 @@ p { margin-bottom: var(--space-sm); }
 @media (max-width: 900px) {
   .hero h1 { font-size: 34px; }
   .directeur-bloc { grid-template-columns: 1fr; }
-  .directeur-photo img { max-width: 260px; }
+  .directeur-photo { text-align: center; }
+  .directeur-photo img { max-width: 260px; margin: 0 auto; }
+  .enseignant-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 600px) {
   .hero h1 { font-size: 26px; }
   .hero p  { font-size: 15px; }
-  .stat-number { font-size: 32px; }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-xs); }
+  .stat-card { padding: var(--space-xs) 4px; }
+  .stat-number { font-size: 20px; }
+  .stat-label { font-size: 10px; letter-spacing: 0.02em; }
+  .enseignant-photo { min-height: 280px; }
+
+  .programme-table th,
+  .programme-table td {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--fs-xs);
+  }
 }
 
 /* 17. GALERIE — CARTES ACCORDÉON */
@@ -815,8 +846,6 @@ p { margin-bottom: var(--space-sm); }
   width: 80px;
   border-radius: 2rem;
   background-color: var(--color-primary);
-  background-size: cover;
-  background-position: center;
   cursor: pointer;
   overflow: hidden;
   margin: 0 10px;
@@ -827,41 +856,21 @@ p { margin-bottom: var(--space-sm); }
   box-shadow: var(--shadow-card);
 }
 
-.galerie-card:hover,
-.galerie-card:last-child {
-  width: 480px;
-}
-
-/* La dernière carte se referme dès qu'une autre carte est survolée */
-.galerie-container:hover .galerie-card:last-child {
-  width: 80px;
-}
-
-.galerie-container:hover .galerie-card:last-child:hover {
-  width: 480px;
+.galerie-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
 }
 
 .galerie-row {
+  position: relative;
+  z-index: 1;
   width: 100%;
   display: flex;
   align-items: center;
   transition: backdrop-filter 0.3s ease;
-}
-
-.galerie-card:hover .galerie-row,
-.galerie-card:last-child .galerie-row {
-  backdrop-filter: blur(6px);
-  background-color: rgba(26, 58, 107, 0.35);
-}
-
-.galerie-container:hover .galerie-card:last-child .galerie-row {
-  backdrop-filter: none;
-  background-color: transparent;
-}
-
-.galerie-container:hover .galerie-card:last-child:hover .galerie-row {
-  backdrop-filter: blur(6px);
-  background-color: rgba(26, 58, 107, 0.35);
 }
 
 .galerie-icon {
@@ -891,22 +900,6 @@ p { margin-bottom: var(--space-sm); }
   transition-delay: 0.1s;
 }
 
-.galerie-card:hover .galerie-description,
-.galerie-card:last-child .galerie-description {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.galerie-container:hover .galerie-card:last-child .galerie-description {
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.galerie-container:hover .galerie-card:last-child:hover .galerie-description {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .galerie-description h4 {
   color: var(--color-white);
   text-transform: uppercase;
@@ -920,28 +913,104 @@ p { margin-bottom: var(--space-sm); }
   margin: 0;
 }
 
+/* Effet accordéon (survol) — grand écran uniquement */
+@media (min-width: 901px) {
+  .galerie-card:hover,
+  .galerie-card:last-child {
+    width: 480px;
+  }
+
+  /* La dernière carte se referme dès qu'une autre carte est survolée */
+  .galerie-container:hover .galerie-card:last-child {
+    width: 80px;
+  }
+
+  .galerie-container:hover .galerie-card:last-child:hover {
+    width: 480px;
+  }
+
+  .galerie-card:hover .galerie-row,
+  .galerie-card:last-child .galerie-row {
+    backdrop-filter: blur(6px);
+    background-color: rgba(26, 58, 107, 0.35);
+  }
+
+  .galerie-container:hover .galerie-card:last-child .galerie-row {
+    backdrop-filter: none;
+    background-color: transparent;
+  }
+
+  .galerie-container:hover .galerie-card:last-child:hover .galerie-row {
+    backdrop-filter: blur(6px);
+    background-color: rgba(26, 58, 107, 0.35);
+  }
+
+  .galerie-card:hover .galerie-description,
+  .galerie-card:last-child .galerie-description {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .galerie-container:hover .galerie-card:last-child .galerie-description {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .galerie-container:hover .galerie-card:last-child:hover .galerie-description {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cartes simples — mobile et tablette */
 @media (max-width: 900px) {
   .galerie-container {
     height: auto;
     flex-wrap: wrap;
     overflow-x: visible;
+    gap: var(--space-sm);
   }
 
   .galerie-card {
     width: 100%;
-    min-height: 80px;
+    min-height: auto;
+    border-radius: var(--radius-card);
+    background-color: var(--color-bg);
+    margin: 0;
+    align-items: stretch;
   }
 
-  .galerie-card:hover { width: 100%; }
+  .galerie-card-bg {
+    position: static;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    margin: var(--space-sm);
+    border-radius: var(--radius-btn);
+    background-color: var(--color-bg-section);
+  }
 
-  .galerie-row { background-color: rgba(26, 58, 107, 0.45); }
+  .galerie-icon { display: none; }
+
+  .galerie-row { background-color: transparent; }
 
   .galerie-description {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
     white-space: normal;
     height: auto;
-    padding: var(--space-xs) 0;
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) 0;
+  }
+
+  .galerie-description h4 {
+    color: var(--color-primary);
+    text-transform: none;
+    font-family: var(--font-title);
+    font-size: var(--fs-h3);
+  }
+
+  .galerie-description p {
+    color: var(--color-text-light);
   }
 }
 
@@ -1058,5 +1127,11 @@ p { margin-bottom: var(--space-sm); }
 
   .galerie-presentation-photos {
     min-height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .galerie-presentation-photos {
+    min-height: 260px;
   }
 }

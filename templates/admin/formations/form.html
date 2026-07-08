@@ -1,0 +1,70 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}{% if item %}Modifier{% else %}Ajouter{% endif %} une formation — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>{% if item %}Modifier{% else %}Ajouter{% endif %} une formation</h1>
+</div>
+
+<div class="admin-form-wrapper">
+  <form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+    <div class="form-group">
+      <label for="nom">Nom *</label>
+      <input type="text" id="nom" name="nom" value="{{ item.nom if item else '' }}" required />
+    </div>
+
+    <div class="form-group">
+      <label for="departement_id">Département *</label>
+      <select id="departement_id" name="departement_id" required>
+        <option value="">—</option>
+        {% for dept in departements %}
+          <option value="{{ dept.id_departement }}" {% if item and item.departement_id == dept.id_departement %}selected{% endif %}>{{ dept.nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="niveau">Niveau *</label>
+      <input type="text" id="niveau" name="niveau" value="{{ item.niveau if item else '' }}" placeholder="ex: Licence" required />
+    </div>
+
+    <div class="form-group">
+      <label for="duree">Durée</label>
+      <input type="text" id="duree" name="duree" value="{{ item.duree if item else '' }}" placeholder="ex: 3 ans" />
+    </div>
+
+    <div class="form-group">
+      <label for="objectif">Objectif</label>
+      <textarea id="objectif" name="objectif" rows="4">{{ item.objectif if item else '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="conditions_admission">Conditions d'admission</label>
+      <textarea id="conditions_admission" name="conditions_admission" rows="3">{{ item.conditions_admission if item else '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="debouches">Débouchés</label>
+      <textarea id="debouches" name="debouches" rows="4">{{ item.debouches if item else '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      {% if item and item.photo %}
+        <div class="admin-current-photo">
+          <img src="{{ url_for('static', filename=item.photo) }}" alt="{{ item.nom }}" />
+        </div>
+      {% endif %}
+      <label for="photo">Photo{% if item %} (laisser vide pour conserver l'actuelle){% endif %}</label>
+      <input type="file" id="photo" name="photo" accept="image/*" />
+    </div>
+
+    <div class="admin-form-actions">
+      <button type="submit" class="btn btn-primary">{% if item %}Enregistrer{% else %}Créer{% endif %}</button>
+      <a href="{{ url_for('admin_formations') }}" class="btn btn-outline">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

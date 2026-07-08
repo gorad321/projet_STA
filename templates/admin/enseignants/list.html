@@ -1,0 +1,51 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Enseignants — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Enseignants</h1>
+  <a href="{{ url_for('admin_enseignant_nouveau') }}" class="btn btn-primary">+ Ajouter</a>
+</div>
+
+<div class="admin-table-wrapper">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Grade</th>
+        <th>Département</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ens in enseignants %}
+        <tr>
+          <td>
+            {% if ens.photo %}
+              <img src="{{ url_for('static', filename=ens.photo) }}" alt="{{ ens.nom }}" class="admin-thumb" />
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td>{{ ens.nom }}</td>
+          <td>{{ ens.grade or '—' }}</td>
+          <td>{{ ens.nom_departement or '—' }}</td>
+          <td>
+            <div class="admin-actions">
+              <a href="{{ url_for('admin_enseignant_modifier', id_enseignant=ens.id_enseignant) }}" class="btn btn-outline btn-sm">Modifier</a>
+              <form method="POST" action="{{ url_for('admin_enseignant_supprimer', id_enseignant=ens.id_enseignant) }}" onsubmit="return confirm('Supprimer cet enseignant ?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="empty-state">Aucun enseignant pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

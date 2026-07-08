@@ -1,0 +1,36 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Tableau de bord — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Tableau de bord</h1>
+</div>
+
+<div class="admin-stats-grid">
+  <a href="{{ url_for('admin_departements') }}" class="admin-stat-card">
+    <div class="admin-stat-number">{{ counts.departements }}</div>
+    <div class="admin-stat-label">Départements</div>
+  </a>
+  <a href="{{ url_for('admin_formations') }}" class="admin-stat-card">
+    <div class="admin-stat-number">{{ counts.formations }}</div>
+    <div class="admin-stat-label">Formations</div>
+  </a>
+  <a href="{{ url_for('admin_enseignants') }}" class="admin-stat-card">
+    <div class="admin-stat-number">{{ counts.enseignants }}</div>
+    <div class="admin-stat-label">Enseignants</div>
+  </a>
+  <a href="{{ url_for('admin_actualites') }}" class="admin-stat-card">
+    <div class="admin-stat-number">{{ counts.actualites }}</div>
+    <div class="admin-stat-label">Actualités</div>
+  </a>
+  <a href="{{ url_for('admin_activites') }}" class="admin-stat-card">
+    <div class="admin-stat-number">{{ counts.activites }}</div>
+    <div class="admin-stat-label">Activités</div>
+  </a>
+  <a href="{{ url_for('admin_galerie') }}" class="admin-stat-card">
+    <div class="admin-stat-number">{{ counts.albums }}</div>
+    <div class="admin-stat-label">Albums galerie</div>
+  </a>
+</div>
+{% endblock %}

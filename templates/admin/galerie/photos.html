@@ -1,0 +1,76 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Photos — {{ album.titre }} — Administration UFR STA{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+  <h1>Photos — {{ album.titre }}</h1>
+  <a href="{{ url_for('admin_galerie') }}" class="btn btn-outline">← Retour aux albums</a>
+</div>
+
+<div class="admin-form-wrapper">
+  <form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+    <div class="form-group">
+      <label for="photos">Ajouter des photos (plusieurs fichiers possibles) *</label>
+      <input type="file" id="photos" name="photos" accept="image/*" multiple required />
+    </div>
+    <div class="form-group">
+      <label for="legende">Légende (appliquée à toutes les photos ajoutées ici)</label>
+      <input type="text" id="legende" name="legende" />
+    </div>
+    <div class="admin-form-actions">
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+  </form>
+</div>
+
+{% if photos %}
+  <p style="margin-top: var(--space-lg); color: var(--color-text-light); font-size: var(--fs-small);">
+    Choisis les 2 photos mises en avant sur la page de l'album (photo principale + photo secondaire). Si aucune n'est choisie, les 2 premières photos ajoutées sont utilisées par défaut.
+  </p>
+  <div class="admin-gallery-grid">
+    {% for photo in photos %}
+      <div class="admin-gallery-item">
+        <div class="admin-gallery-item-photo">
+          <img src="{{ url_for('static', filename=photo.chemin) }}" alt="{{ photo.legende or album.titre }}" />
+          {% if photo.ordre_affichage == 1 %}
+            <span class="badge badge-primary admin-gallery-badge">Principale</span>
+          {% elif photo.ordre_affichage == 2 %}
+            <span class="badge badge-primary admin-gallery-badge">Secondaire</span>
+          {% endif %}
+        </div>
+        <div class="admin-gallery-item-body">
+          <span class="card-text">{{ photo.legende or '—' }}</span>
+        </div>
+        <div class="admin-gallery-item-actions">
+          {% if photo.ordre_affichage != 1 %}
+            <form method="POST" action="{{ url_for('admin_photo_mettre_en_avant', id_album=album.id_album, id_photo=photo.id_photo, rang=1) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <button type="submit" class="btn btn-outline btn-sm">Principale</button>
+            </form>
+          {% endif %}
+          {% if photo.ordre_affichage != 2 %}
+            <form method="POST" action="{{ url_for('admin_photo_mettre_en_avant', id_album=album.id_album, id_photo=photo.id_photo, rang=2) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <button type="submit" class="btn btn-outline btn-sm">Secondaire</button>
+            </form>
+          {% endif %}
+          {% if photo.ordre_affichage %}
+            <form method="POST" action="{{ url_for('admin_photo_retirer_mise_en_avant', id_album=album.id_album, id_photo=photo.id_photo) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+              <button type="submit" class="btn btn-outline btn-sm">Retirer</button>
+            </form>
+          {% endif %}
+          <form method="POST" action="{{ url_for('admin_photo_supprimer', id_album=album.id_album, id_photo=photo.id_photo) }}" onsubmit="return confirm('Supprimer cette photo ?');">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="empty-state" style="margin-top: var(--space-lg);">Aucune photo dans cet album pour le moment.</p>
+{% endif %}
+{% endblock %}
