@@ -8,6 +8,7 @@ from itertools import groupby
 import bcrypt
 import pymysql
 import pymysql.cursors
+import requests
 from dotenv import load_dotenv
 from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 from werkzeug.utils import secure_filename
@@ -20,6 +21,27 @@ app.secret_key = os.getenv('SECRET_KEY', 'dev-secret-key')
 
 ALLOWED_PHOTO_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'images', 'uploads')
+
+RESEND_API_KEY = os.getenv('RESEND_API_KEY')
+CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@uam.edu.sn')
+
+
+def send_contact_email(nom, email, sujet, message):
+    """Envoie le message du formulaire de contact à l'UFR STA via Resend.
+    Le visiteur est mis en reply-to : répondre à l'email suffit à lui répondre."""
+    response = requests.post(
+        'https://api.resend.com/emails',
+        headers={'Authorization': f'Bearer {RESEND_API_KEY}'},
+        json={
+            'from': 'Site UFR STA <onboarding@resend.dev>',
+            'to': [CONTACT_EMAIL],
+            'reply_to': email,
+            'subject': f'[Contact site] {sujet}' if sujet else '[Contact site] Nouveau message',
+            'text': f'Nom : {nom}\nEmail : {email}\nSujet : {sujet or "—"}\n\n{message}',
+        },
+        timeout=10,
+    )
+    response.raise_for_status()
 
 
 def group_programme(modules):
@@ -1009,8 +1031,11 @@ def contact():
             flash('Veuillez remplir tous les champs obligatoires.', 'error')
             return redirect(url_for('contact'))
 
-        # TODO Phase 3 : envoyer l'email via Resend
-        flash('Votre message a bien été envoyé. Nous vous répondrons bientôt.', 'success')
+        try:
+            send_contact_email(nom, email, sujet, message)
+            flash('Votre message a bien été envoyé. Nous vous répondrons bientôt.', 'success')
+        except Exception:
+            flash("Une erreur est survenue lors de l'envoi. Veuillez réessayer plus tard.", 'error')
         return redirect(url_for('contact'))
 
     return render_template('contact.html')
