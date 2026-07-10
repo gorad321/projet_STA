@@ -1334,3 +1334,22 @@ p { margin-bottom: var(--space-sm); }
 @media (max-width: 600px) {
   .gallery-masonry { column-count: 1; }
 }
+
+/* 22. FICHE ACTUALITÉ — texte à gauche, photo à droite */
+.actualite-detail-grid {
+  align-items: start;
+  gap: var(--space-xl);
+}
+
+.actualite-detail-photo {
+  width: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 900px) {
+  .actualite-detail-grid { grid-template-columns: 1fr; }
+  .actualite-detail-photo { order: -1; min-height: 260px; }
+}
