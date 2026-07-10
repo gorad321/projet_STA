@@ -1353,3 +1353,60 @@ p { margin-bottom: var(--space-sm); }
   .actualite-detail-grid { grid-template-columns: 1fr; }
   .actualite-detail-photo { order: -1; min-height: 260px; }
 }
+
+/* 23. ACTIVITÉS — bandes horizontales alternées */
+.activite-bands {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+.activite-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.activite-band-media { order: 1; }
+.activite-band-text { order: 2; }
+
+.activite-band-reverse .activite-band-media { order: 2; }
+.activite-band-reverse .activite-band-text { order: 1; }
+
+.activite-band-media img,
+.activite-band-media .card-img-placeholder {
+  width: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.3s ease;
+}
+
+.activite-band-media img:hover {
+  transform: scale(1.015);
+}
+
+.activite-band-date {
+  color: var(--color-text-light);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-xs);
+}
+
+.activite-band-title {
+  margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 900px) {
+  .activite-bands { gap: var(--space-xl); }
+  .activite-band { grid-template-columns: 1fr; }
+  .activite-band-media,
+  .activite-band-reverse .activite-band-media { order: -1; }
+  .activite-band-text,
+  .activite-band-reverse .activite-band-text { order: 2; }
+  .activite-band-media img,
+  .activite-band-media .card-img-placeholder { min-height: 240px; }
+}

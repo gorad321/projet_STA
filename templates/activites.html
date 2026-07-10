@@ -24,20 +24,21 @@
 <section class="section">
   <div class="container">
     {% if activites %}
-      <div class="grid-3">
+      <div class="activite-bands">
         {% for act in activites %}
-          <article class="card">
-            {% if act.photo %}
-              <img src="{{ url_for('static', filename=act.photo) }}"
-                   alt="{{ act.titre }}" class="card-img" />
-            {% else %}
-              <div class="card-img-placeholder"></div>
-            {% endif %}
-            <div class="card-body">
-              <h3 class="card-title">{{ act.titre }}</h3>
-              <p class="card-text">{{ act.date_activite.strftime('%d/%m/%Y') }}{% if act.lieu %} — {{ act.lieu }}{% endif %}</p>
+          <article class="activite-band {% if loop.index0 % 2 == 1 %}activite-band-reverse{% endif %}">
+            <div class="activite-band-media">
+              {% if act.photo %}
+                <img src="{{ url_for('static', filename=act.photo) }}" alt="{{ act.titre }}" />
+              {% else %}
+                <div class="card-img-placeholder"></div>
+              {% endif %}
+            </div>
+            <div class="activite-band-text">
+              <p class="activite-band-date">{{ act.date_activite.strftime('%d/%m/%Y') }}{% if act.lieu %} — {{ act.lieu }}{% endif %}</p>
+              <h3 class="activite-band-title">{{ act.titre }}</h3>
               {% if act.organisateur %}<p class="card-text"><strong>Organisateur :</strong> {{ act.organisateur }}</p>{% endif %}
-              <p class="card-text">{{ act.description[:120] }}{% if act.description and act.description|length > 120 %}...{% endif %}</p>
+              <p class="card-text">{{ act.description[:220] }}{% if act.description and act.description|length > 220 %}...{% endif %}</p>
               <a href="{{ url_for('activite_detail', id_activite=act.id_activite) }}" class="btn btn-outline">En savoir plus</a>
             </div>
           </article>
