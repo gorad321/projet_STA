@@ -41,7 +41,7 @@
       {% for photo in photos %}
         <figure>
           <img src="{{ url_for('static', filename=photo.chemin) }}"
-               alt="{{ photo.legende or activite.titre }}" class="card-img" />
+               alt="{{ photo.legende or activite.titre }}" class="card-img gallery-photo-img" />
           {% if photo.legende %}<figcaption class="card-text">{{ photo.legende }}</figcaption>{% endif %}
         </figure>
       {% endfor %}

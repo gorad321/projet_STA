@@ -305,6 +305,11 @@ p { margin-bottom: var(--space-sm); }
   object-fit: cover;
 }
 
+/* Photos de galerie (albums, activités) : cadrées vers le haut pour ne pas couper les visages */
+.gallery-photo-img {
+  object-position: center top;
+}
+
 .card-title {
   font-family: var(--font-title);
   font-size: var(--fs-h3);
