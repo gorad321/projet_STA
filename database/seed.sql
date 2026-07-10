@@ -180,47 +180,57 @@ INSERT INTO module_programme (formation_id, semestre, unite_enseignement, nom_mo
 -- =====================================================
 -- ENSEIGNANTS
 -- =====================================================
-INSERT INTO enseignant (nom, grade, fonction, discipline, specialite_cames, domaines_recherche, photo) VALUES
-('Dr. Thierno Mohamadane Mansour SOW', 'Maître de Conférences Titulaire', NULL,
+INSERT INTO enseignant (departement_id, nom, grade, fonction, discipline, specialite_cames, email, domaines_recherche, photo) VALUES
+(1, 'Dr. Thierno Mohamadane Mansour SOW', 'Maître de Conférences Titulaire', NULL,
  'Mathématiques Appliquées',
  'Mathématiques Appliquées',
+ 'thierno.sow@uam.edu.sn',
  'Analyse Non linéaire\nGéométrie des Espaces de Banach\nOptimisation et méthodes itératives\nAnalyse Fonctionnelle\nCalcul des Variations',
  'images/sow.png'),
 
-('Dr. Makha NDAO', 'Maître de Conférences Titulaire', NULL,
+(2, 'Dr. Makha NDAO', 'Maître de Conférences Titulaire', NULL,
  'Nanosciences Nanotechnologie Matériaux',
  'Physique : Milieux denses et matériaux',
+ 'makha.ndao@uam.edu.sn',
  'Biomasse et stockage d\'énergie (supercondensateurs, piles) et traitement des eaux\nPolymères et élastomères pour l\'industrie\nSéparation des phases fluides (simulation numérique et expériences)\nPollution marine par les microplastiques\nQualité des eaux et traitements (Osmose inverse, Nanofiltration, Microfiltration, Ultrafiltration)',
  'images/Makha.png'),
 
-('Dr. Alioune COULIBALY', 'Maître de Conférences Titulaire',
+(1, 'Dr. Alioune COULIBALY', 'Maître de Conférences Titulaire',
  'Directeur de l\'UFR Sciences et Technologies Avancées (STA)',
  'Mathématiques appliquées (Méthodes aléatoires)',
  'Mathématiques : Mathématiques appliquées (Méthodes aléatoires)',
+ 'alioune.coulibaly@uam.edu.sn',
  'Equations aux dérivées partielles (EDP) – Equations différentielles stochastiques (EDS)\nAnalyse fonctionnelle\nProbabilité – Statistique\nSystèmes dynamiques\nCalcul stochastique',
  'images/coulibaly.png'),
 
-('Pr. Issa SAKHO', 'Professeur assimilé',
+(2, 'Pr. Issa SAKHO', 'Professeur assimilé',
  'Vice-recteur chargé de la Recherche, de l\'Innovation et du Partenariat',
  'Géosciences marines et littorales',
  'Géosciences marines et littorales',
+ 'issa.sakho@uam.edu.sn',
  'Dynamique physique des systèmes sédimentaires littoraux\nForçages météo-océaniques, Risques littoraux et infrastructures de protection côtière (SD et SFN)\nTransfert de matières (eau, sédiment, dissout) dans les grands hydro-systèmes : de la source à la mer\nDynamique et fonctionnement des écosystèmes de carbone bleu : mangroves et herbiers',
  'images/Sakho.png'),
 
-('Pr. Amadou Dahirou GUEYE', 'Professeur Titulaire',
+(1, 'Pr. Amadou Dahirou GUEYE', 'Professeur Titulaire',
  'Vice-Recteur chargé des Affaires pédagogiques et de la Vie universitaire',
  'Informatique',
  'Informatique',
+ 'dahirou.gueye@uam.edu.sn',
  'Télé-laboratoires et Organisations virtuelles\nTélé-enseignement\nIntelligence artificielle appliquée à la santé, la sécurité routière, l\'éducation et l\'environnement\nInternet des Objets et Cloud',
  'images/Dahirou.png'),
 
-('Dr. Sada ANNE', 'Docteur', NULL, NULL, NULL, NULL, 'images/Anne.png'),
+(1, 'Dr. Sada ANNE', 'Docteur', NULL, 'Informatique', NULL, 'sada.anne@uam.edu.sn',
+ 'Informatique / IA, spécialisé en imagerie médicale et détection de maladies (notamment AVC et cancer)',
+ 'images/Anne.png'),
 
-('Dr. Lamine YADE', 'Docteur', NULL, NULL, NULL, NULL, 'images/yade.png'),
+(1, 'Dr. Lamine YADE', 'Docteur', NULL, 'Informatique', NULL, 'lamine.yade@uam.edu.sn',
+ 'Informatique (TIC), spécialisé en IoT, cloud computing, laboratoires distants, virtualisation et technologies éducatives',
+ 'images/yade.png'),
 
-('Dr. Siny NDOYE', 'Maître de Conférences Titulaire', NULL,
+(2, 'Dr. Siny NDOYE', 'Maître de Conférences Titulaire', NULL,
  'Physique: Océanographie et Applications',
  'Physique: Océanographie et Applications',
+ 'siny.ndoye@uam.edu.sn',
  'Dynamique Océanique (Hydrodynamique des fluides géophysiques)\nDynamique de l\'Upwelling côtier Ouest Africain\nPollution marine et dimensionnement d\'émissaire en mer\nChangement climatique et Événements extrêmes (Impact du changement climatique sur la dynamique océanique)\nModélisation hydrodynamique de l\'environnement marin et côtier',
  'images/Ndoye.png');
 
