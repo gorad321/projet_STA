@@ -19,41 +19,10 @@
   </div>
 </section>
 
-<!-- BANDE DE STATS -->
-<section class="section" style="padding-bottom: 0;">
+<!-- PRÉSENTATION -->
+<section class="section">
   <div class="container">
     <a href="{{ url_for('formations') }}" class="back-link">← Toutes les formations</a>
-    <div class="formation-stats-bar">
-      <div class="formation-stat">
-        <span class="formation-stat-label">Niveau</span>
-        <span class="formation-stat-value">{{ formation.niveau }}</span>
-      </div>
-      {% if formation.duree %}
-        <div class="formation-stat">
-          <span class="formation-stat-label">Durée</span>
-          <span class="formation-stat-value">{{ formation.duree }}</span>
-        </div>
-      {% endif %}
-      <div class="formation-stat">
-        <span class="formation-stat-label">Département</span>
-        <span class="formation-stat-value">{{ formation.nom_departement }}</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SOUS-MENU -->
-<nav class="formation-subnav">
-  <div class="container formation-subnav-inner">
-    <a href="#informations">Informations</a>
-    {% if specialisations %}<a href="#specialisations">Spécialisations</a>{% endif %}
-    <a href="#programme">Programme</a>
-  </div>
-</nav>
-
-<!-- PRÉSENTATION -->
-<section class="section" id="informations">
-  <div class="container">
     <h2 class="section-title">Informations générales</h2>
     <div class="departement-presentation">
       <p><strong>Nom :</strong> {{ formation.nom }}</p>
@@ -69,7 +38,7 @@
 
 <!-- SPÉCIALISATIONS -->
 {% if specialisations %}
-<section class="section" id="specialisations">
+<section class="section">
   <div class="container">
     <h2 class="section-title">Spécialisations</h2>
     <div class="departement-presentation">
@@ -91,33 +60,37 @@
 {% endif %}
 
 <!-- PROGRAMME -->
-<section class="section section-alt" id="programme">
+<section class="section section-alt">
   <div class="container">
     <h2 class="section-title">{% if specialisations %}Programme (tronc commun){% else %}Programme{% endif %}</h2>
     {% if programme %}
       {% for sem in programme %}
         <div class="programme-block">
           <h3 class="programme-semestre-title">{{ sem.semestre }}</h3>
-          <div class="ue-cards">
-            {% for ue in sem.ue_groups %}
-              <div class="ue-card">
-                <div class="ue-card-header">
-                  <span class="ue-card-name">{{ ue.nom }}</span>
-                  {% if ue.credits %}<span class="ue-card-credits">{{ ue.credits }} crédits</span>{% endif %}
-                </div>
-                <ul class="ue-card-elements">
+          <div class="table-wrapper">
+            <table class="programme-table">
+              <thead>
+                <tr>
+                  <th>Élément constitutif</th>
+                  <th>VHT</th>
+                  <th>Coef.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ue in sem.ue_groups %}
+                  <tr class="ue-row">
+                    <td colspan="3">{{ ue.nom }}{% if ue.credits %} — {{ ue.credits }} crédits{% endif %}</td>
+                  </tr>
                   {% for el in ue.elements %}
-                    <li>
-                      <span class="el-name">{{ el.nom_module }}</span>
-                      <span class="el-meta">
-                        {% if el.vht %}<span class="el-chip">{{ el.vht }} h</span>{% endif %}
-                        <span class="el-chip el-chip-coef">Coef. {{ el.coefficient }}</span>
-                      </span>
-                    </li>
+                    <tr>
+                      <td>{{ el.nom_module }}</td>
+                      <td>{% if el.vht %}{{ el.vht }} h{% endif %}</td>
+                      <td>{{ el.coefficient }}</td>
+                    </tr>
                   {% endfor %}
-                </ul>
-              </div>
-            {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       {% endfor %}
@@ -139,26 +112,30 @@
         {% if spe_programme %}
           {% for sem in spe_programme %}
             <h4 class="programme-semestre-title">{{ sem.semestre }}</h4>
-            <div class="ue-cards">
-              {% for ue in sem.ue_groups %}
-                <div class="ue-card">
-                  <div class="ue-card-header">
-                    <span class="ue-card-name">{{ ue.nom }}</span>
-                    {% if ue.credits %}<span class="ue-card-credits">{{ ue.credits }} crédits</span>{% endif %}
-                  </div>
-                  <ul class="ue-card-elements">
+            <div class="table-wrapper">
+              <table class="programme-table">
+                <thead>
+                  <tr>
+                    <th>Élément constitutif</th>
+                    <th>VHT</th>
+                    <th>Coef.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for ue in sem.ue_groups %}
+                    <tr class="ue-row">
+                      <td colspan="3">{{ ue.nom }}{% if ue.credits %} — {{ ue.credits }} crédits{% endif %}</td>
+                    </tr>
                     {% for el in ue.elements %}
-                      <li>
-                        <span class="el-name">{{ el.nom_module }}</span>
-                        <span class="el-meta">
-                          {% if el.vht %}<span class="el-chip">{{ el.vht }} h</span>{% endif %}
-                          <span class="el-chip el-chip-coef">Coef. {{ el.coefficient }}</span>
-                        </span>
-                      </li>
+                      <tr>
+                        <td>{{ el.nom_module }}</td>
+                        <td>{% if el.vht %}{{ el.vht }} h{% endif %}</td>
+                        <td>{{ el.coefficient }}</td>
+                      </tr>
                     {% endfor %}
-                  </ul>
-                </div>
-              {% endfor %}
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
           {% endfor %}
         {% else %}

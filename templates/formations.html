@@ -39,19 +39,16 @@
       </div>
       <div class="grid-2" style="margin-bottom: var(--space-xl);">
         {% for f in formations_dept %}
-          <article class="card formation-card">
-            <div class="formation-card-media">
-              {% if f.photo %}
-                <img src="{{ url_for('static', filename=f.photo) }}" alt="{{ f.nom }}" class="card-img" />
-              {% else %}
-                <div class="card-img-placeholder"></div>
-              {% endif %}
-              {% if f.niveau %}<span class="formation-card-badge">{{ f.niveau }}</span>{% endif %}
-            </div>
+          <article class="card">
+            {% if f.photo %}
+              <img src="{{ url_for('static', filename=f.photo) }}" alt="{{ f.nom }}" class="card-img" />
+            {% else %}
+              <div class="card-img-placeholder"></div>
+            {% endif %}
             <div class="card-body">
               <h3 class="card-title">{{ f.nom }}</h3>
               {% if f.objectif %}<p class="card-text">{{ f.objectif }}</p>{% endif %}
-              <a href="{{ url_for('formation_detail', id_formation=f.id_formation) }}" class="btn btn-outline">Voir la formation →</a>
+              <a href="{{ url_for('formation_detail', id_formation=f.id_formation) }}" class="btn btn-outline">Voir la formation</a>
             </div>
           </article>
         {% endfor %}
