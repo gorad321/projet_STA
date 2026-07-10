@@ -49,12 +49,12 @@
   <div class="container">
     <h2 class="section-title">Toutes les photos</h2>
     {% if photos %}
-      <div class="grid-3">
+      <div class="gallery-masonry">
         {% for photo in photos %}
-          <figure>
+          <figure class="masonry-item">
             <a href="{{ url_for('static', filename=photo.chemin) }}" class="lightbox-trigger">
               <img src="{{ url_for('static', filename=photo.chemin) }}"
-                   alt="{{ photo.legende or album.titre }}" class="card-img gallery-photo-img" />
+                   alt="{{ photo.legende or album.titre }}" class="masonry-photo" />
             </a>
             {% if photo.legende %}<figcaption class="card-text">{{ photo.legende }}</figcaption>{% endif %}
           </figure>

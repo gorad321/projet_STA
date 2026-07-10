@@ -1287,3 +1287,41 @@ p { margin-bottom: var(--space-sm); }
   .news-slide-media img,
   .news-slide-media .card-img-placeholder { min-height: 180px; }
 }
+
+/* 21. GALERIE — MOSAÏQUE IRRÉGULIÈRE (toutes les photos d'un album) */
+.gallery-masonry {
+  column-count: 3;
+  column-gap: var(--space-md);
+}
+
+.masonry-item {
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid;
+  margin-bottom: var(--space-md);
+}
+
+.masonry-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.35s ease;
+}
+
+.masonry-item a:hover .masonry-photo {
+  transform: scale(1.025);
+}
+
+.masonry-item figcaption {
+  margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+  .gallery-masonry { column-count: 2; }
+}
+
+@media (max-width: 600px) {
+  .gallery-masonry { column-count: 1; }
+}
