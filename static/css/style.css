@@ -1285,3 +1285,181 @@ p { margin-bottom: var(--space-sm); }
   .news-slide-media img,
   .news-slide-media .card-img-placeholder { min-height: 180px; }
 }
+
+/* 21. FORMATIONS — cartes, bande de stats, sous-menu, programme en cartes UE */
+.formation-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.formation-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(26, 58, 107, 0.16);
+}
+
+.formation-card-media {
+  position: relative;
+}
+
+.formation-card-badge {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.formation-stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-bg-section);
+  border-radius: var(--radius-card);
+}
+
+.formation-stat {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 14px;
+}
+
+.formation-stat-label {
+  display: block;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-light);
+  margin-bottom: 2px;
+}
+
+.formation-stat-value {
+  display: block;
+  font-family: var(--font-title);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: var(--fs-h3);
+}
+
+.formation-subnav {
+  position: sticky;
+  top: var(--navbar-height);
+  z-index: 50;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.formation-subnav-inner {
+  display: flex;
+  gap: var(--space-lg);
+  padding: 12px 0;
+  overflow-x: auto;
+}
+
+.formation-subnav a {
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+}
+
+.formation-subnav a:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-accent);
+}
+
+.ue-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.ue-card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-card);
+  padding: var(--space-sm) var(--space-md);
+  box-shadow: var(--shadow-card);
+}
+
+.ue-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-xs);
+}
+
+.ue-card-name {
+  font-family: var(--font-title);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.ue-card-credits {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-accent);
+  background-color: #EAF0FA;
+  padding: 2px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.ue-card-elements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ue-card-elements li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-bg-section);
+  font-size: var(--fs-small);
+}
+
+.ue-card-elements li:first-child {
+  border-top: none;
+}
+
+.el-name {
+  color: var(--color-text);
+}
+
+.el-meta {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.el-chip {
+  font-size: var(--fs-xs);
+  color: var(--color-text-light);
+  background-color: var(--color-bg-section);
+  padding: 3px 9px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.el-chip-coef {
+  color: var(--color-primary);
+  font-weight: 600;
+}
