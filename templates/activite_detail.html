@@ -24,17 +24,17 @@
   <div class="container">
     <a href="{{ url_for('activites') }}" class="back-link">← Toutes les activités</a>
     <div class="grid-2 actualite-detail-grid">
+      <div class="departement-presentation">
+        {% if activite.lieu %}<span class="badge badge-primary">{{ activite.lieu }}</span>{% endif %}
+        <p><strong>Date :</strong> {{ activite.date_activite.strftime('%d/%m/%Y') }}</p>
+        {% if activite.organisateur %}<p><strong>Organisateur :</strong> {{ activite.organisateur }}</p>{% endif %}
+      </div>
       {% if photos %}
         <img src="{{ url_for('static', filename=photos[0].chemin) }}"
              alt="{{ activite.titre }}" class="actualite-detail-photo" />
       {% else %}
         <div class="card-img-placeholder"></div>
       {% endif %}
-      <div class="departement-presentation">
-        {% if activite.lieu %}<span class="badge badge-primary">{{ activite.lieu }}</span>{% endif %}
-        <p><strong>Date :</strong> {{ activite.date_activite.strftime('%d/%m/%Y') }}</p>
-        {% if activite.organisateur %}<p><strong>Organisateur :</strong> {{ activite.organisateur }}</p>{% endif %}
-      </div>
     </div>
     <div class="departement-presentation" style="max-width: none; margin-top: var(--space-lg);">
       <p class="text-preserve-lines">{{ activite.description }}</p>

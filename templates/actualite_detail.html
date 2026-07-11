@@ -24,16 +24,16 @@
   <div class="container">
     <a href="{{ url_for('actualites') }}" class="back-link">← Toutes les actualités</a>
     <div class="grid-2 actualite-detail-grid">
+      <div class="departement-presentation">
+        {% if actualite.type %}<span class="badge badge-primary">{{ actualite.type }}</span>{% endif %}
+        <p><strong>Publié le :</strong> {{ actualite.date_publication.strftime('%d/%m/%Y') }}</p>
+      </div>
       {% if actualite.photo %}
         <img src="{{ url_for('static', filename=actualite.photo) }}"
              alt="{{ actualite.titre }}" class="actualite-detail-photo" />
       {% else %}
         <div class="card-img-placeholder"></div>
       {% endif %}
-      <div class="departement-presentation">
-        {% if actualite.type %}<span class="badge badge-primary">{{ actualite.type }}</span>{% endif %}
-        <p><strong>Publié le :</strong> {{ actualite.date_publication.strftime('%d/%m/%Y') }}</p>
-      </div>
     </div>
     <div class="departement-presentation" style="max-width: none; margin-top: var(--space-lg);">
       <p class="text-preserve-lines">{{ actualite.description }}</p>
