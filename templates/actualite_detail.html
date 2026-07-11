@@ -27,7 +27,6 @@
       <div class="departement-presentation">
         {% if actualite.type %}<span class="badge badge-primary">{{ actualite.type }}</span>{% endif %}
         <p><strong>Publié le :</strong> {{ actualite.date_publication.strftime('%d/%m/%Y') }}</p>
-        <p class="text-preserve-lines">{{ actualite.description }}</p>
       </div>
       {% if actualite.photo %}
         <img src="{{ url_for('static', filename=actualite.photo) }}"
@@ -35,6 +34,9 @@
       {% else %}
         <div class="card-img-placeholder"></div>
       {% endif %}
+    </div>
+    <div class="departement-presentation" style="max-width: none; margin-top: var(--space-lg);">
+      <p class="text-preserve-lines">{{ actualite.description }}</p>
     </div>
   </div>
 </section>
