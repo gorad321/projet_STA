@@ -23,18 +23,18 @@
 <section class="section">
   <div class="container">
     <a href="{{ url_for('actualites') }}" class="back-link">← Toutes les actualités</a>
-    <div class="grid-2 actualite-detail-grid">
-      <div class="departement-presentation">
+    <div class="actualite-detail-content">
+      {% if actualite.photo %}
+        <img src="{{ url_for('static', filename=actualite.photo) }}"
+             alt="{{ actualite.titre }}" class="actualite-detail-photo-float" />
+      {% else %}
+        <div class="card-img-placeholder actualite-detail-photo-float"></div>
+      {% endif %}
+      <div class="departement-presentation" style="max-width: none;">
         {% if actualite.type %}<span class="badge badge-primary">{{ actualite.type }}</span>{% endif %}
         <p><strong>Publié le :</strong> {{ actualite.date_publication.strftime('%d/%m/%Y') }}</p>
         <p class="text-preserve-lines">{{ actualite.description }}</p>
       </div>
-      {% if actualite.photo %}
-        <img src="{{ url_for('static', filename=actualite.photo) }}"
-             alt="{{ actualite.titre }}" class="actualite-detail-photo" />
-      {% else %}
-        <div class="card-img-placeholder"></div>
-      {% endif %}
     </div>
   </div>
 </section>

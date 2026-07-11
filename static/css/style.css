@@ -1335,23 +1335,30 @@ p { margin-bottom: var(--space-sm); }
   .gallery-masonry { column-count: 1; }
 }
 
-/* 22. FICHE ACTUALITÉ — texte à gauche, photo à droite */
-.actualite-detail-grid {
-  align-items: start;
-  gap: var(--space-xl);
+/* 22. FICHE ACTUALITÉ — photo flottante, le texte remonte à côté puis reprend toute la largeur */
+.actualite-detail-content::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
-.actualite-detail-photo {
-  width: 100%;
-  min-height: 320px;
+.actualite-detail-photo-float {
+  float: right;
+  width: 42%;
+  max-height: 380px;
   object-fit: cover;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
+  margin: 0 0 var(--space-md) var(--space-xl);
 }
 
 @media (max-width: 900px) {
-  .actualite-detail-grid { grid-template-columns: 1fr; }
-  .actualite-detail-photo { order: -1; min-height: 260px; }
+  .actualite-detail-photo-float {
+    float: none;
+    width: 100%;
+    max-height: 260px;
+    margin: 0 0 var(--space-md);
+  }
 }
 
 /* 23. ACTIVITÉS — bandes horizontales alternées */
