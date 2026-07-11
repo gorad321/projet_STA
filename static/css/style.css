@@ -1410,3 +1410,8 @@ p { margin-bottom: var(--space-sm); }
   .activite-band-media img,
   .activite-band-media .card-img-placeholder { min-height: 240px; }
 }
+
+/* 24. Texte avec retours à la ligne préservés (descriptions longues et structurées) */
+.text-preserve-lines {
+  white-space: pre-line;
+}
