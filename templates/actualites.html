@@ -31,7 +31,7 @@
               <span class="section-eyebrow">{{ actu.type or 'À la une' }}</span>
               <h3 class="news-slide-title">{{ actu.titre }}</h3>
               <p class="news-slide-date">{{ actu.date_publication.strftime('%d/%m/%Y') }}</p>
-              <p class="news-slide-desc">{{ actu.description[:130] }}{% if actu.description and actu.description|length > 130 %}...{% endif %}</p>
+              <p class="news-slide-desc">{{ actu.description[:220] }}{% if actu.description and actu.description|length > 220 %}...{% endif %}</p>
               <a href="{{ url_for('actualite_detail', id_actualite=actu.id_actualite) }}" class="news-slide-link">
                 Lire la suite <span class="news-slide-arrow">→</span>
               </a>
