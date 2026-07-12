@@ -934,14 +934,7 @@ def actualite_detail(id_actualite):
 
 @app.route('/activites')
 def activites():
-    activites = db_fetch_all(
-        """SELECT a.*,
-                  (SELECT p.chemin FROM photo p
-                   WHERE p.activite_id = a.id_activite
-                   ORDER BY p.date_ajout ASC LIMIT 1) AS photo
-           FROM activite a
-           ORDER BY a.date_activite DESC"""
-    )
+    activites = db_fetch_all("SELECT * FROM activite ORDER BY date_activite DESC")
     return render_template('activites.html', activites=activites)
 
 

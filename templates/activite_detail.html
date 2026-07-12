@@ -24,8 +24,8 @@
   <div class="container">
     <a href="{{ url_for('activites') }}" class="back-link">← Toutes les activités</a>
     <div class="actualite-detail-content">
-      {% if photos %}
-        <img src="{{ url_for('static', filename=photos[0].chemin) }}"
+      {% if activite.photo %}
+        <img src="{{ url_for('static', filename=activite.photo) }}"
              alt="{{ activite.titre }}" class="actualite-detail-photo-float" />
       {% else %}
         <div class="card-img-placeholder actualite-detail-photo-float"></div>
@@ -41,12 +41,12 @@
 </section>
 
 <!-- AUTRES PHOTOS -->
-{% if photos|length > 1 %}
+{% if photos %}
 <section class="section section-alt">
   <div class="container">
     <h2 class="section-title">Photos</h2>
     <div class="gallery-masonry">
-      {% for photo in photos[1:] %}
+      {% for photo in photos %}
         <figure class="masonry-item">
           <img src="{{ url_for('static', filename=photo.chemin) }}"
                alt="{{ photo.legende or activite.titre }}" class="masonry-photo" />
