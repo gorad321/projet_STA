@@ -806,6 +806,16 @@ p { margin-bottom: var(--space-sm); }
   color: rgba(255, 255, 255, 0.90);
 }
 
+/* Le menu burger ouvert force toujours un fond opaque, même sur navbar transparente */
+.navbar.navbar-menu-open {
+  background-color: var(--color-primary);
+  box-shadow: var(--shadow-nav);
+}
+
+.navbar-menu-open .nav-links a {
+  color: rgba(255, 255, 255, 0.88);
+}
+
 /* Responsive accueil */
 @media (max-width: 900px) {
   .hero h1 { font-size: 34px; }

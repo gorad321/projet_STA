@@ -1,18 +1,21 @@
 // Burger menu mobile
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks  = document.querySelector('.nav-links');
- 
+const navToggle    = document.querySelector('.nav-toggle');
+const navLinks     = document.querySelector('.nav-links');
+const navbarForToggle = document.querySelector('.navbar');
+
 if (navToggle && navLinks) {
   navToggle.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('open');
     navToggle.setAttribute('aria-expanded', isOpen);
+    if (navbarForToggle) navbarForToggle.classList.toggle('navbar-menu-open', isOpen);
   });
- 
+
   // Fermer le menu si on clique sur un lien
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       navToggle.setAttribute('aria-expanded', 'false');
+      if (navbarForToggle) navbarForToggle.classList.remove('navbar-menu-open');
     });
   });
 }
