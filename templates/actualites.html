@@ -24,21 +24,24 @@
 <section class="section">
   <div class="container">
     {% if actualites %}
-      <div class="grid-3">
+      <div class="news-list">
         {% for actu in actualites %}
-          <article class="card">
-            {% if actu.photo %}
-              <img src="{{ url_for('static', filename=actu.photo) }}"
-                   alt="{{ actu.titre }}" class="card-img" />
-            {% else %}
-              <div class="card-img-placeholder"></div>
-            {% endif %}
-            <div class="card-body">
-              {% if actu.type %}<span class="badge badge-primary">{{ actu.type }}</span>{% endif %}
-              <h3 class="card-title">{{ actu.titre }}</h3>
-              <p class="card-text">{{ actu.date_publication.strftime('%d/%m/%Y') }}</p>
-              <p class="card-text">{{ actu.description[:120] }}{% if actu.description and actu.description|length > 120 %}...{% endif %}</p>
-              <a href="{{ url_for('actualite_detail', id_actualite=actu.id_actualite) }}" class="btn btn-outline">Lire la suite</a>
+          <article class="news-list-item">
+            <div class="news-slide-text">
+              <span class="section-eyebrow">{{ actu.type or 'À la une' }}</span>
+              <h3 class="news-slide-title">{{ actu.titre }}</h3>
+              <p class="news-slide-date">{{ actu.date_publication.strftime('%d/%m/%Y') }}</p>
+              <p class="news-slide-desc">{{ actu.description[:130] }}{% if actu.description and actu.description|length > 130 %}...{% endif %}</p>
+              <a href="{{ url_for('actualite_detail', id_actualite=actu.id_actualite) }}" class="news-slide-link">
+                Lire la suite <span class="news-slide-arrow">→</span>
+              </a>
+            </div>
+            <div class="news-slide-media">
+              {% if actu.photo %}
+                <img src="{{ url_for('static', filename=actu.photo) }}" alt="{{ actu.titre }}" />
+              {% else %}
+                <div class="card-img-placeholder"></div>
+              {% endif %}
             </div>
           </article>
         {% endfor %}
