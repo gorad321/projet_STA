@@ -487,11 +487,6 @@ p { margin-bottom: var(--space-sm); }
   .grid-3,
   .grid-4 { grid-template-columns: 1fr; }
 
-  .enseignants-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-sm);
-  }
-
   .footer-grid { grid-template-columns: 1fr; }
 
   .navbar-brand img.logo-uam { height: 48px; }
@@ -822,8 +817,12 @@ p { margin-bottom: var(--space-sm); }
 }
 
 @media (max-width: 600px) {
-  .hero h1 { font-size: 26px; }
-  .hero p  { font-size: 15px; }
+  .hero { min-height: 78vh; min-height: 78svh; }
+  .hero-inner { padding: var(--space-md) 0; }
+  .hero h1 { font-size: 30px; margin-bottom: var(--space-md); }
+  .hero p  { font-size: 16px; margin-bottom: var(--space-xl); }
+  .hero-actions { gap: var(--space-sm); }
+  .hero-actions .btn { font-size: 15px; padding: 14px 28px; }
   .stats-grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-xs); }
   .stat-card { padding: var(--space-xs) 4px; }
   .stat-number { font-size: 20px; }
@@ -1299,40 +1298,68 @@ p { margin-bottom: var(--space-sm); }
 
 /* 21. GALERIE — MOSAÏQUE IRRÉGULIÈRE (toutes les photos d'un album) */
 .gallery-masonry {
-  column-count: 3;
-  column-gap: var(--space-md);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 160px;
+  grid-auto-flow: dense;
+  gap: var(--space-sm);
 }
 
 .masonry-item {
-  display: inline-block;
-  width: 100%;
-  break-inside: avoid;
-  margin-bottom: var(--space-md);
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+/* Rythme irrégulier : une grande case puis une case haute tous les 6 éléments */
+.masonry-item:nth-child(6n+1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.masonry-item:nth-child(6n+4) {
+  grid-row: span 2;
 }
 
 .masonry-photo {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  object-fit: cover;
+  object-position: center top;
   transition: transform 0.35s ease;
 }
 
+.masonry-item a {
+  display: block;
+  height: 100%;
+}
+
 .masonry-item a:hover .masonry-photo {
-  transform: scale(1.025);
+  transform: scale(1.06);
 }
 
 .masonry-item figcaption {
-  margin-top: 6px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+  color: var(--color-white);
+  font-size: var(--fs-xs);
 }
 
 @media (max-width: 900px) {
-  .gallery-masonry { column-count: 2; }
+  .gallery-masonry { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 130px; }
 }
 
 @media (max-width: 600px) {
-  .gallery-masonry { column-count: 1; }
+  .gallery-masonry { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 110px; gap: var(--space-xs); }
 }
 
 /* 22. FICHE ACTUALITÉ — photo flottante, le texte remonte à côté puis reprend toute la largeur */
