@@ -875,7 +875,7 @@ p { margin-bottom: var(--space-sm); }
   display: flex;
   align-items: flex-end;
   text-decoration: none;
-  transition: width 0.6s cubic-bezier(0.28, -0.03, 0, 0.99);
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-card);
 }
 
@@ -936,50 +936,18 @@ p { margin-bottom: var(--space-sm); }
   margin: 0;
 }
 
-/* Effet accordéon (survol) — grand écran uniquement */
+/* Effet accordéon (clic) — grand écran uniquement */
 @media (min-width: 901px) {
-  .galerie-card:hover,
-  .galerie-card:last-child {
+  .galerie-card.open {
     width: 480px;
   }
 
-  /* La dernière carte se referme dès qu'une autre carte est survolée */
-  .galerie-container:hover .galerie-card:last-child {
-    width: 80px;
-  }
-
-  .galerie-container:hover .galerie-card:last-child:hover {
-    width: 480px;
-  }
-
-  .galerie-card:hover .galerie-row,
-  .galerie-card:last-child .galerie-row {
+  .galerie-card.open .galerie-row {
     backdrop-filter: blur(6px);
     background-color: rgba(26, 58, 107, 0.35);
   }
 
-  .galerie-container:hover .galerie-card:last-child .galerie-row {
-    backdrop-filter: none;
-    background-color: transparent;
-  }
-
-  .galerie-container:hover .galerie-card:last-child:hover .galerie-row {
-    backdrop-filter: blur(6px);
-    background-color: rgba(26, 58, 107, 0.35);
-  }
-
-  .galerie-card:hover .galerie-description,
-  .galerie-card:last-child .galerie-description {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .galerie-container:hover .galerie-card:last-child .galerie-description {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-
-  .galerie-container:hover .galerie-card:last-child:hover .galerie-description {
+  .galerie-card.open .galerie-description {
     opacity: 1;
     transform: translateY(0);
   }

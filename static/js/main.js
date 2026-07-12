@@ -72,6 +72,29 @@ if (lightbox) {
   });
 }
 
+// Galerie — accordéon au clic (desktop uniquement ; sur mobile les cartes sont déjà simples)
+const galerieContainer = document.querySelector('.galerie-container');
+
+if (galerieContainer) {
+  const galerieCards = galerieContainer.querySelectorAll('.galerie-card');
+  const isDesktop = () => window.matchMedia('(min-width: 901px)').matches;
+
+  galerieCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (!isDesktop()) return;
+      if (!card.classList.contains('open')) {
+        e.preventDefault();
+        galerieCards.forEach(c => c.classList.remove('open'));
+        card.classList.add('open');
+      }
+    });
+  });
+
+  if (isDesktop() && galerieCards.length) {
+    galerieCards[galerieCards.length - 1].classList.add('open');
+  }
+}
+
 // Carrousel des dernières actualités (accueil)
 const newsCarousel = document.querySelector('.news-carousel');
 
