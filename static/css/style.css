@@ -1409,14 +1409,21 @@ p { margin-bottom: var(--space-sm); }
 .activite-bands {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2xl);
+  gap: var(--space-lg);
 }
 
 .activite-band {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
   align-items: center;
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.activite-bands .activite-band:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .activite-band-media { order: 1; }
@@ -1428,7 +1435,8 @@ p { margin-bottom: var(--space-sm); }
 .activite-band-media img,
 .activite-band-media .card-img-placeholder {
   width: 100%;
-  min-height: 320px;
+  height: 220px;
+  min-height: 220px;
   object-fit: cover;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
@@ -1459,7 +1467,7 @@ p { margin-bottom: var(--space-sm); }
   .activite-band-text,
   .activite-band-reverse .activite-band-text { order: 2; }
   .activite-band-media img,
-  .activite-band-media .card-img-placeholder { min-height: 240px; }
+  .activite-band-media .card-img-placeholder { height: 200px; min-height: 200px; }
 }
 
 /* 24. Texte avec retours à la ligne préservés (descriptions longues et structurées) */
