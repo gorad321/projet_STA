@@ -4,33 +4,69 @@
 
 {% block content %}
 <div class="admin-header">
-  <h1>Tableau de bord</h1>
+  <div>
+    <h1>Tableau de bord</h1>
+    <p class="admin-header-subtitle">Vue d'ensemble du contenu du site{% if session.admin_nom %} — connecté en tant que {{ session.admin_nom }}{% endif %}</p>
+  </div>
 </div>
 
 <div class="admin-stats-grid">
-  <a href="{{ url_for('admin_departements') }}" class="admin-stat-card">
-    <div class="admin-stat-number">{{ counts.departements }}</div>
-    <div class="admin-stat-label">Départements</div>
+  <a href="{{ url_for('admin_departements') }}" class="admin-stat-card admin-stat-card-navy">
+    <span class="admin-stat-badge"></span>
+    <span class="admin-stat-body">
+      <span class="admin-stat-label">Départements</span>
+      <span class="admin-stat-number">{{ counts.departements }}</span>
+    </span>
   </a>
-  <a href="{{ url_for('admin_formations') }}" class="admin-stat-card">
-    <div class="admin-stat-number">{{ counts.formations }}</div>
-    <div class="admin-stat-label">Formations</div>
+  <a href="{{ url_for('admin_formations') }}" class="admin-stat-card admin-stat-card-terracotta">
+    <span class="admin-stat-badge"></span>
+    <span class="admin-stat-body">
+      <span class="admin-stat-label">Formations</span>
+      <span class="admin-stat-number">{{ counts.formations }}</span>
+    </span>
   </a>
-  <a href="{{ url_for('admin_enseignants') }}" class="admin-stat-card">
-    <div class="admin-stat-number">{{ counts.enseignants }}</div>
-    <div class="admin-stat-label">Enseignants</div>
+  <a href="{{ url_for('admin_enseignants') }}" class="admin-stat-card admin-stat-card-navy">
+    <span class="admin-stat-badge"></span>
+    <span class="admin-stat-body">
+      <span class="admin-stat-label">Enseignants</span>
+      <span class="admin-stat-number">{{ counts.enseignants }}</span>
+    </span>
   </a>
-  <a href="{{ url_for('admin_actualites') }}" class="admin-stat-card">
-    <div class="admin-stat-number">{{ counts.actualites }}</div>
-    <div class="admin-stat-label">Actualités</div>
+  <a href="{{ url_for('admin_actualites') }}" class="admin-stat-card admin-stat-card-terracotta">
+    <span class="admin-stat-badge"></span>
+    <span class="admin-stat-body">
+      <span class="admin-stat-label">Actualités</span>
+      <span class="admin-stat-number">{{ counts.actualites }}</span>
+    </span>
   </a>
-  <a href="{{ url_for('admin_activites') }}" class="admin-stat-card">
-    <div class="admin-stat-number">{{ counts.activites }}</div>
-    <div class="admin-stat-label">Activités</div>
+  <a href="{{ url_for('admin_activites') }}" class="admin-stat-card admin-stat-card-navy">
+    <span class="admin-stat-badge"></span>
+    <span class="admin-stat-body">
+      <span class="admin-stat-label">Activités</span>
+      <span class="admin-stat-number">{{ counts.activites }}</span>
+    </span>
   </a>
-  <a href="{{ url_for('admin_galerie') }}" class="admin-stat-card">
-    <div class="admin-stat-number">{{ counts.albums }}</div>
-    <div class="admin-stat-label">Albums galerie</div>
+  <a href="{{ url_for('admin_galerie') }}" class="admin-stat-card admin-stat-card-terracotta">
+    <span class="admin-stat-badge"></span>
+    <span class="admin-stat-body">
+      <span class="admin-stat-label">Albums galerie</span>
+      <span class="admin-stat-number">{{ counts.albums }}</span>
+    </span>
   </a>
+</div>
+
+<div class="admin-chart">
+  <h2 class="admin-chart-title">Répartition du contenu</h2>
+  <div class="admin-chart-bars">
+    {% for label, value in chart_data %}
+      <div class="admin-chart-row">
+        <span class="admin-chart-label">{{ label }}</span>
+        <div class="admin-chart-track">
+          <div class="admin-chart-fill" style="width: {{ (value / chart_max * 100) if chart_max else 0 }}%"></div>
+        </div>
+        <span class="admin-chart-value">{{ value }}</span>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

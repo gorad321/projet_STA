@@ -217,7 +217,16 @@ def admin_dashboard():
         'activites': db_fetch_one("SELECT COUNT(*) AS c FROM activite")['c'],
         'albums': db_fetch_one("SELECT COUNT(*) AS c FROM album")['c'],
     }
-    return render_template('admin/dashboard.html', counts=counts)
+    chart_data = [
+        ('Départements', counts['departements']),
+        ('Formations', counts['formations']),
+        ('Enseignants', counts['enseignants']),
+        ('Actualités', counts['actualites']),
+        ('Activités', counts['activites']),
+        ('Albums galerie', counts['albums']),
+    ]
+    chart_max = max((v for _, v in chart_data), default=0)
+    return render_template('admin/dashboard.html', counts=counts, chart_data=chart_data, chart_max=chart_max)
 
 
 # --- Départements ---
